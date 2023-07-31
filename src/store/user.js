@@ -47,6 +47,7 @@ const actions = {
     // 用户登录(token)
     async userLogin({commit},data){
         let result = await loginApi(data);
+        // console.log(result.data)
         if(result.flag == true){
             commit('USERLOGIN',result.data.token)
             // 持久化存储token

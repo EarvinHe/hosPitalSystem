@@ -30,9 +30,9 @@ export const setUserData = (userData)=>{
 }
 
 export const getUserData = ()=>{
-    localStorage.getItem('UserData')
+  return localStorage.getItem('UserData')
 }
 
 export const   removeUserData = ()=>{
-    localStorage.removeItem('UserData')
+   return localStorage.removeItem('UserData')
 }

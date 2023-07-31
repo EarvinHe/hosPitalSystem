@@ -178,7 +178,7 @@ export default {
         realName:this.realName
       }
       // const userid = JSON.parse(JSON.stringify(this.userId))
-      this.$router.push({path:'/DiagnosisResult',query:{data}})
+      this.$router.push({path:'/DiagnosisResult',query:{data:data}})
     }
   },
 };
