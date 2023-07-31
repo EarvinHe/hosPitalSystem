@@ -30,7 +30,7 @@
         ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/21b2c0e2-2e74-4ec4-a1d0-db9a89aff83c)
         当点击添加科室时跳转路由，到添加页面，同样是form表单，双向绑定获取数据，向后台发送添加请求，添加完成返回科室管理页面，组件挂在时重新触发查询请求将新的数据也展示在页面上；以下：
         ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/c7174246-d3df-4fb7-a3ae-efb363e1ec40)
-
+  
         ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/0645c516-26e0-41aa-a7fe-e4f7e0ae4def)
         
 
