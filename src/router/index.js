@@ -39,240 +39,240 @@ Vue.use(VueRouter);
 
 const routes = [
     {
-        path:'/',//默认路径
-        name:'home',
+        path: '/',//默认路径
+        name: 'home',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:Home
+        component: Home
     },
     {
-        path:'/carousel',//默认路径
-        name:'carousel',
+        path: '/carousel',//默认路径
+        name: 'carousel',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:Carousel
-    },
- 
-    {
-        path:'/login',//默认路径
-        name:'login',
-        // component: () => import ('../views/login/Login'),//懒加载
-        component:Login
+        component: Carousel
     },
 
     {
-        path:'/regist',//默认路径
-        name:'regist',
+        path: '/login',//默认路径
+        name: 'login',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:Regist
+        component: Login
     },
 
     {
-        path:'/dept',//默认路径
-        name:'dept',
+        path: '/regist',//默认路径
+        name: 'regist',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:Dept
+        component: Regist
+    },
+
+    {
+        path: '/dept',//默认路径
+        name: 'dept',
+        // component: () => import ('../views/login/Login'),//懒加载
+        component: Dept
     },
     {
-        path:'/addDept',//默认路径
-        name:'addDept',
+        path: '/addDept',//默认路径
+        name: 'addDept',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:AddDept
+        component: AddDept
     },
     {
         // 路由传参，将选中的数据的deptId带给该页面
-        path:'/updateDept/:deptId',//默认路径
-        name:'updateDept',
+        path: '/updateDept/:deptId',//默认路径
+        name: 'updateDept',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:UpdateDept
+        component: UpdateDept
     },
 
     {
         // 
-        path:'/drugList',//默认路径
-        name:'drugList',
+        path: '/drugList',//默认路径
+        name: 'drugList',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:DrugList
+        component: DrugList
     },
     {
-        path:'/addDrug',//默认路径
-        name:'addDrug',
+        path: '/addDrug',//默认路径
+        name: 'addDrug',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:AddDrug
+        component: AddDrug
     },
     {
         // 路由传参，将选中的数据的deptId带给该页面
-        path:'/updateDrug/:drugsId',//默认路径
-        name:'updateDrug',
+        path: '/updateDrug/:drugsId',//默认路径
+        name: 'updateDrug',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:UpdateDrug
+        component: UpdateDrug
     },
 
     {
         // 药品审核
-        path:'/checkDrug',
-        name:'checkDrug',
-        component:CheckDrug
+        path: '/checkDrug',
+        name: 'checkDrug',
+        component: CheckDrug
     },
     {
         // 药品审核详情
-        path:'/drugDetail/:drugsId',
-        name:'drugDetail',
-        component:DrugDetail
+        path: '/drugDetail/:drugsId',
+        name: 'drugDetail',
+        component: DrugDetail
     },
     {
         // 药品审核详情
-        path:'/inCheckDrug/:drugsId',
-        name:'inCheckDrug',
-        component:InCheckDrug
+        path: '/inCheckDrug/:drugsId',
+        name: 'inCheckDrug',
+        component: InCheckDrug
     },
 
     {
         // 
-        path:'/patientList',//默认路径
-        name:'patientList',
+        path: '/patientList',//默认路径
+        name: 'patientList',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:PatientList
+        component: PatientList
     },
     {
         // 
-        path:'/addPatient',//默认路径
-        name:'addPatient',
+        path: '/addPatient',//默认路径
+        name: 'addPatient',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:AddPatient
+        component: AddPatient
     },
 
     {
         // 
-        path:'/patientRegist',//默认路径
-        name:'patientRegist',
+        path: '/patientRegist',//默认路径
+        name: 'patientRegist',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:PatientRegist
+        component: PatientRegist
     },
 
     {
         // 
-        path:'/triageList',//默认路径
-        name:'triageList',
+        path: '/triageList',//默认路径
+        name: 'triageList',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:TriageList
+        component: TriageList
     },
     {
         // 
-        path:'/triageDetail/:deptId',//默认路径
+        path: '/triageDetail/:deptId',//默认路径
         // path:'/triageDetail',//默认路径
-        name:'triageDetail',
+        name: 'triageDetail',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:TriageDetail
+        component: TriageDetail
     },
     {
         // 
-        path:'/diagnosisResult',//默认路径
+        path: '/diagnosisResult',//默认路径
         // path:'/triageDetail',//默认路径
-        name:'diagnosisResult',
+        name: 'diagnosisResult',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:DiagnosisResult
+        component: DiagnosisResult
     },
     {
-        path:'/log',//默认路径
+        path: '/log',//默认路径
         // path:'/triageDetail',//默认路径
-        name:'log',
+        name: 'log',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:Log
+        component: Log
     },
     {
-        path:'/log2',//默认路径
+        path: '/log2',//默认路径
         // path:'/triageDetail',//默认路径
-        name:'log2',
+        name: 'log2',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:Log2
+        component: Log2
     },
     {
-        path:'/dutyList',//默认路径
+        path: '/dutyList',//默认路径
         // path:'/triageDetail',//默认路径
-        name:'dutyList',
+        name: 'dutyList',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:DutyList
+        component: DutyList
     },
     {
-        path:'/dutyManager/:deptId',//默认路径
+        path: '/dutyManager/:deptId',//默认路径
         // path:'/triageDetail',//默认路径
-        name:'dutyManager',
+        name: 'dutyManager',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:DutyManager
+        component: DutyManager
     },
     {
-        path:'/addDuty/:deptId',//默认路径
+        path: '/addDuty/:deptId',//默认路径
         // path:'/triageDetail',//默认路径
-        name:'addDuty',
+        name: 'addDuty',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:AddDuty
+        component: AddDuty
     },
     {
-        path:'/noticeList',//默认路径
+        path: '/noticeList',//默认路径
         // path:'/triageDetail',//默认路径
-        name:'noticeList',
+        name: 'noticeList',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:NoticeList
+        component: NoticeList
     },
     {
-        path:'/addNotice',//默认路径
+        path: '/addNotice',//默认路径
         // path:'/triageDetail',//默认路径
-        name:'addNotice',
+        name: 'addNotice',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:AddNotice
+        component: AddNotice
     },
     {
-        path:'/updateNotice',//默认路径
+        path: '/updateNotice',//默认路径
         // path:'/triageDetail',//默认路径
-        name:'updateNotice',
+        name: 'updateNotice',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:UpdateNotice
+        component: UpdateNotice
     },
     {
-        path:'/fileList',//默认路径
+        path: '/fileList',//默认路径
         // path:'/triageDetail',//默认路径
-        name:'fileList',
+        name: 'fileList',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:FileList
+        component: FileList
     },
     {
-        path:'/addFile',//默认路径
+        path: '/addFile',//默认路径
         // path:'/triageDetail',//默认路径
-        name:'addFile',
+        name: 'addFile',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:AddFile
+        component: AddFile
     },
     {
-        path:'/test',//默认路径
+        path: '/test',//默认路径
         // path:'/triageDetail',//默认路径
-        name:'test',
+        name: 'test',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:test
+        component: test
     },
     {
-        path:'/test1',//默认路径
+        path: '/test1',//默认路径
         // path:'/triageDetail',//默认路径
-        name:'test1',
+        name: 'test1',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:test1
+        component: test1
     },
 
     {
-        path:'/downLoadPatient',//默认路径
+        path: '/downLoadPatient',//默认路径
         // path:'/triageDetail',//默认路径
-        name:'downLoadPatient',
+        name: 'downLoadPatient',
         // component: () => import ('../views/login/Login'),//懒加载
-        component:DownLoadPatient
+        component: DownLoadPatient
     },
 ]
 
 // 配置路由
 const router = new VueRouter({
-    mode: 'history',
-  base: process.env.BASE_URL,
+    mode: 'hash',
+    base: process.env.BASE_URL,
     routes,
- /*    scrollBehavior(to, from, savedPosition) {
-        return { y: 100 };
-    } */
+    /*    scrollBehavior(to, from, savedPosition) {
+           return { y: 100 };
+       } */
 
 });
 
@@ -303,51 +303,55 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
 }
 
 //路由守卫
-router.beforeEach((to,from,next)=>{
+router.beforeEach((to, from, next) => {
     const token = store.state.user.userToken
     const name = store.state.user.userName
     // 管理系统常见的两个金典逻辑：
     // 1.如果用户访问登录页面，但token已经存在，跳转到首页
-    if(token){
+    if (token) {
         // token存在的情况：
         // (1)已经存在token还访问login：
-        if(to.path === '/login'){
+        if (to.path === '/login') {
             next('/')//那么重定向到首页
-        }else{
+        } else {
             // 已经有token，但去的不是登录
             // 那么如果用户名已存在，放行
-            if(name){
+            if (name) {
                 next()
-            }else{
+            } else {
                 // 用户名不存在：（有可能localStorage中的用户名被误操作所清除）
                 //只能重新登录一遍
                 next('/login')
             }
         }
-    }else{
-        // 如果token不存在，明显未登录
+    } else {
+        // 如果token不存在，明显未登录或者未注册
         // 但是还要往其他页面跳转
-        if(to.path !== '/login'){
-            // 强制往登录跳转
-            next('/login')
-            return
+        if (to.path !== '/login') {
+
+            if (to.path === '/regist') {
+                next()
+            } else {
+                // 强制往登录跳转
+                next('/login')
+            }
         }
-       
+
     }
     next()
 })
 
 
-  /*   if(to.path === '/login' && token){
-        next('/')
-        return
-    }
-    // 2.如果访问的不是登录页面，但是没有token，跳转岛登录页面
-    if(to.path !== '/login' && !token){
-        next('/login')
-        return
-    }
-    next() */
+/*   if(to.path === '/login' && token){
+      next('/')
+      return
+  }
+  // 2.如果访问的不是登录页面，但是没有token，跳转岛登录页面
+  if(to.path !== '/login' && !token){
+      next('/login')
+      return
+  }
+  next() */
 
 
 export default router;

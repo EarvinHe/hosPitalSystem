@@ -166,7 +166,8 @@ export default {
     },
 
     // 诊断结果
-   async toDiagnosis(row){
+   toDiagnosis(row){
+    console.log(this.userId)
        const data = {
         id:row.id,
         patientId:row.patientId,
@@ -177,7 +178,7 @@ export default {
         realName:this.realName
       }
       // const userid = JSON.parse(JSON.stringify(this.userId))
-      await this.$router.push({path:'/DiagnosisResult',query:{data}})
+      this.$router.push({path:'/DiagnosisResult',query:{data}})
     }
   },
 };

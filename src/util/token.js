@@ -24,3 +24,15 @@ export const gettUserName = ()=>{
 export const removeUsername= ()=>{
     localStorage.removeItem('hosUserName')
 }
+
+export const setUserData = (userData)=>{
+    localStorage.setItem('UserData',userData)
+}
+
+export const getUserData = ()=>{
+    localStorage.getItem('UserData')
+}
+
+export const   removeUserData = ()=>{
+    localStorage.removeItem('UserData')
+}

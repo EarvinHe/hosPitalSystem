@@ -5,8 +5,7 @@ passWord true 普通参数 string 密码 */
 export const loginApi = (data) => requests({
     // user表下面查询用户
     url: '/user/login', method: 'post', data
-    , header: {
-        
+    , header: {    
         'Content-Type': 'application/json'
     }
 })

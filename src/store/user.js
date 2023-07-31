@@ -1,14 +1,15 @@
 // 该user小仓库引入的依次是用户注册，与用户注册页面有关的查询科室，用户登出的接口
 // 但登录功能直接写在了login组件当中，因为并没有用到仓库,
 // 最后又加上了loginApi因为发现要借用该请求存储userId到state
-import { setToken,getToken,removeToken,setUserName,gettUserName,removeUsername } from "@/util/token";
+import { setToken,getToken,removeToken,setUserName,gettUserName,removeUsername,setUserData,getUserData, removeUserData } from "@/util/token";
 import { loginApi, reqUserRegist, reqAllDepts,reqLogout} from "../api/index";
 const state = {
     // 存储请求返回的数据到仓库，初始为空,
     // 是否为字符串或者对象还是数组得看请求的数据是什么样子的
     deptInfo: {},
     userName:gettUserName(),
-    userToken:getToken()
+    userToken:getToken(),
+    userData:getUserData()
 }
 const mutations = {
 
@@ -22,6 +23,9 @@ const mutations = {
     SETUSERDATA(state,userName){
         state.userName = userName
     },
+    SETUSERDATA1(state,userData){
+        state.userData = userData
+    },
 
     // 将数据存储，deptInfo实际上是请求返回的result.data
     SELECTALLDEPTS(state, deptInfo) {
@@ -31,7 +35,9 @@ const mutations = {
     // 退出登录时，同时清除本地存储的user信息
     USERLOGOUT(state){
         state.userName=''
-        state.userToken =''
+        state.userToken ='',
+        state.userData=[],
+        removeUserData(),
         removeToken();
         removeUsername();
     }
@@ -46,6 +52,8 @@ const actions = {
             // 持久化存储token
             setToken(result.data.token)
 
+            commit('SETUSERDATA1',result.data.user)
+            setUserData(JSON.stringify( result.data.user))
             // 持久化存储用户信息
             commit('SETUSERDATA',result.data.user.userName)
             setUserName(result.data.user.userName)

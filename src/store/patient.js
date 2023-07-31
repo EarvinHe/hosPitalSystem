@@ -122,6 +122,7 @@ const actions = {
     // 诊断结果
     async resultPatient({commit},{id,diagnosisResult}){
         let result = await reqQueryPatientresult(id,diagnosisResult)
+        console.log(result)
         if(result.flag == true){
             return 'ok'
         }else{
