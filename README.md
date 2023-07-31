@@ -33,10 +33,54 @@
 
    ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/c7174246-d3df-4fb7-a3ae-efb363e1ec40)
 
+删除功能：有单个删除和批量删除，批量删除很特别，相比于单个删除只需要发一次根据id删除就行，批量删除需要借助es6中的foreEach()方法遍历循环删除，实际上是多次调用单个删除的方法。部分代码如下：
+    ```   
+       // 批量删除  
+       deleteSomeDepts() {     
+          try {     
+           this.multipleSelection.forEach(async (item) => {     
+             await this.$store.dispatch("deleteDept", item.deptId);    
+             this.getData();   
+           });      
+         } catch (error) {     
+           alert(error.msg);     
+         }   
+         },   ``` 
+         
+   另外就是修改科室功能了，同样是跳转路由，不同的是要带参，将id通过路由带给修改页面，修改页面接受id并通过此id查询原本的数据先展示出来，然后再进行修改，将修改后的数据通过v-model绑定通过请求发送给后台进行修改。
+   ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/7bf3f833-945e-4f3e-b92a-22194a02bbd9)
 
-  
-![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/0645c516-26e0-41aa-a7fe-e4f7e0ae4def)
-        
+   
+#### （5）药品管理：
+   之后我们做的是药品管理模块，相对来说它相对独立于其他模块功能之外，但功能比较多，有药品展示（查询），添加药品，删除药品，编辑药品（根据id修改药品），药品的上架与下架（跟药品的销售状态挂钩），药品的审核（共有四种状态，具体看开发文档）
+   ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/5bb5dfc4-6cf8-4caf-96be-1bd2a45250f4)
+   ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/19891588-df90-4997-879e-20244d3c7756)
+   
+   添加，删除和修改不再赘述，与科室的类似，不同的可能只是参数和请求路径不同，值得注意的是，新添加的药品的销售状态和审核状态一定是等待上架（下架状态）和等待提交审核的，而且，一个很重要的逻辑是，当新添加完药品后，它的销售状态是只读的，其点击按钮是无法点击触发任何事件的，并且，不论审核状态是啥，只要它不是审核通过，都无法将其改为上架状态（即显示等待下架状态），另外，审核状态出了提交审核，其它三种也是只读状态。以下：
+   ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/fa44e5ff-2c4c-4392-8797-52320097005f)
+   审核药品管理页，详情，审核页自然另有单独的页面：
+   ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/e2595279-3e47-41a0-b4fe-de223ee7febc)
+   ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/4fb9ef8c-3996-4a2f-9154-96d53f9118e8)
+   ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/6924b8d9-ec1b-47b7-9012-72a0ee250b40)
+   查看详情自然与修改差不多，无论是采取从父组件通过路由传参还是在子组件发请求都能把数据带过去，详情的数据自然是只读的。
+   审核页修改审核状态，页面挂在时将药品名和生产商带过去显示，是否通过和意见由管理员（你自己）修改后返回审核管理页面，通过与不通过都将显示在一开始的药品管理页。
+
+#### （6）患者管理：
+   展示数据，添加，修改，删除无需多说，跟着开发文档发请求，该传参的地方传参就行了，不同的是，编辑我用了el-dialog的组件做了一个弹出框，这样便不用再路由跳转页面了
+   ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/1cc123d8-9660-4941-ae96-614824f47a49)
+   
+   ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/5868db79-a24d-4a47-ae7b-e7bd9f5cc754)
+   
+   ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/da6968da-9824-4851-9f19-7802ebcd2ea4)
+   其次是挂号和下载诊断，这两个操作都与分诊管理模块相关，挂号是发请求将患者信息带给分诊管理的分诊科室（取决于患者挂的是哪一科室，也有可能是多个科室），而
+下载诊断需要等分诊中的每个科室诊断结束后才能发送下载请求，以下是下载诊断，同样是弹出框：
+![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/393d70b9-5856-4764-9b10-d97f92baf2a4)
+
+
+
+
+
+
 
 
         
