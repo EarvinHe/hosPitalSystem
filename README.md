@@ -13,9 +13,9 @@
 
 ## 二、组件与功能：
 #### （1）项目的构建：
-         用vscode或者cmd创建一个vue2项目，添加需要的依赖，以及elementui，根据后端提供的开发文档，  在views和compenents中初步划分好各个组件模块，在入口文件中引入需要的依赖如elementUi，less等。
-         配置好api文件，api文件中有两个文件，一个是requets，  用来二次分装axios请求，基础路径，  以及请求和响应拦截器。另一个是index.js，在此写axios请求。
-         在vue.config文件中配置好跨域。
+用vscode或者cmd创建一个vue2项目，添加需要的依赖，以及elementui，根据后端提供的开发文档，  在views和compenents中初步划分好各个组件模块，在入口文件中引入需要的依赖如elementUi，less等。
+配置好api文件，api文件中有两个文件，一个是requets，  用来二次分装axios请求，基础路径，  以及请求和响应拦截器。另一个是index.js，在此写axios请求。
+在vue.config文件中配置好跨域。
 #### （2）登录：
         项目的创建除了基本的的vue create .... 和引入各种包，如vue-router,vuex,elementui这些基本操作以外，  之后要做的第一件事就是登录模块，专门在views中添加一个login文件夹，在里面添加一个login.vue文件，  按照需求，我们用elementui和css样式将登录页面实现(之所以验证码图片未能显示，在于后端的权限功能还未完成，后续会完善):
   ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/3d4e969b-9e54-4589-9979-ea59722f43d2)
