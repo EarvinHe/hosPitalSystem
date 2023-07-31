@@ -18,26 +18,24 @@
          在vue.config文件中配置好跨域。
 #### （2）登录：
         项目的创建除了基本的的vue create .... 和引入各种包，如vue-router,vuex,elementui这些基本操作以外，  之后要做的第一件事就是登录模块，专门在views中添加一个login文件夹，在里面添加一个login.vue文件，  按照需求，我们用elementui和css样式将登录页面实现(之所以验证码图片未能显示，在于后端的权限功能还未完成，后续会完善):
-        ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/3d4e969b-9e54-4589-9979-ea59722f43d2)
+  ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/3d4e969b-9e54-4589-9979-ea59722f43d2)
         
         写好基本页面后，便是登录功能的实现：我们拿到后端提供的登录接口，先在api文件夹中的index.js文件中编写此登录请求，然后在store仓库中新建一个user小仓库，编写actions方法（此类似过程后续不再赘述，无非就是发起请求的三连环，有的多两步操作（mutations，getters）罢了，具体可以视要求而变更），在login.vue页面中派发$store.dispatch，登陆成功返回home首页，失败返回错误信息。
 #### （3）注册
         页面的样式编写自不必多说，同样在首页或者登录框中点击注册时弹出一个新页面用于新用户注册，在form表单中用双向绑定v-model获取填入的信息，在选择科室和选择文件那分别发起查询科室的请求和选择文件的请求，点击注册发起请求将其提交给后端，后端将其添加到数据库，返回注册成功的信息；以下为页面：
-        ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/8327d513-efbe-4389-b417-c3f251a9c64b)
+  ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/8327d513-efbe-4389-b417-c3f251a9c64b)
 
 #### （4）科室模块：
         我们放弃有限完成首页模块而选择有限科室模块，原因是，后续很多操作需要用到查询科室，以及根据科室id进行某些查询，不可能每此遇到类似的就重新发一个查询请求，更好的方式应该是优先完成该模块，此后再需要数据，要么路由传参，要么直接从相对应的vuex中的dept科室小仓库拿数据即可。以下：
 
-        
-        ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/21b2c0e2-2e74-4ec4-a1d0-db9a89aff83c)
+![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/21b2c0e2-2e74-4ec4-a1d0-db9a89aff83c)
         当点击添加科室时跳转路由，到添加页面，同样是form表单，双向绑定获取数据，向后台发送添加请求，添加完成返回科室管理页面，组件挂在时重新触发查询请求将新的数据也展示在页面上；以下：
 
-        
-        ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/c7174246-d3df-4fb7-a3ae-efb363e1ec40)
+   ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/c7174246-d3df-4fb7-a3ae-efb363e1ec40)
 
 
   
-        ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/0645c516-26e0-41aa-a7fe-e4f7e0ae4def)
+![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/0645c516-26e0-41aa-a7fe-e4f7e0ae4def)
         
 
 
