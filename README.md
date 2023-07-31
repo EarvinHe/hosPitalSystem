@@ -13,11 +13,11 @@
 
 ## 二、组件与功能：
 #### （1）项目的构建：
-         用vscode或者cmd创建一个vue2项目，添加需要的依赖，以及elementui，根据后端提供的开发文档，在views和compenents中初步划分好各个组件模块，在入口文件中引入需要的依赖如elementUi，less等。
-         配置好api文件，api文件中有两个文件，一个是requets，用来二次分装axios请求，基础路径，以及请求和响应拦截器。另一个是index.js，在此写axios请求。
+         用vscode或者cmd创建一个vue2项目，添加需要的依赖，以及elementui，根据后端提供的开发文档，  在views和compenents中初步划分好各个组件模块，在入口文件中引入需要的依赖如elementUi，less等。
+         配置好api文件，api文件中有两个文件，一个是requets，  用来二次分装axios请求，基础路径，  以及请求和响应拦截器。另一个是index.js，在此写axios请求。
          在vue.config文件中配置好跨域。
 #### （2）登录：
-        项目的创建除了基本的的vue create .... 和引入各种包，如vue-router,vuex,elementui这些基本操作以外，之后要做的第一件事就是登录模块，专门在views中添加一个login文件夹，在里面添加一个login.vue文件，按照需求，我们用elementui和css样式将登录页面实现(之所以验证码图片未能显示，在于后端的权限功能还未完成，后续会完善):
+        项目的创建除了基本的的vue create .... 和引入各种包，如vue-router,vuex,elementui这些基本操作以外，  之后要做的第一件事就是登录模块，专门在views中添加一个login文件夹，在里面添加一个login.vue文件，  按照需求，我们用elementui和css样式将登录页面实现(之所以验证码图片未能显示，在于后端的权限功能还未完成，后续会完善):
         ![image](https://github.com/EarvinHe/hospitalSystem/assets/140814338/3d4e969b-9e54-4589-9979-ea59722f43d2)
         
         写好基本页面后，便是登录功能的实现：我们拿到后端提供的登录接口，先在api文件夹中的index.js文件中编写此登录请求，然后在store仓库中新建一个user小仓库，编写actions方法（此类似过程后续不再赘述，无非就是发起请求的三连环，有的多两步操作（mutations，getters）罢了，具体可以视要求而变更），在login.vue页面中派发$store.dispatch，登陆成功返回home首页，失败返回错误信息。
