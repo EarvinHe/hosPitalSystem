@@ -31,8 +31,7 @@ const actions = {
     // 下在文档
     async downLoad({commit},fileId){
         let result = await reqDownLoad(fileId);
-        return result
-        
+        return result    
     }
 
     /*     // 上传文件

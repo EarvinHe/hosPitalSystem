@@ -52,7 +52,12 @@
                 >叫号</el-button
               >
 
-              <el-button size="mini" type="primary" @click="toDiagnosis(scope.row)">诊断</el-button>
+              <el-button
+                size="mini"
+                type="primary"
+                @click="toDiagnosis(scope.row)"
+                >诊断</el-button
+              >
             </template>
           </el-table-column>
         </el-table-column>
@@ -95,7 +100,7 @@ export default {
     this.queryPatientByDeptId();
   },
   computed: {
-    ...mapGetters(["patientDeptData",'userId']),
+    ...mapGetters(["patientDeptData", "userId"]),
     records() {
       return this.patientDeptData.records;
     },
@@ -106,9 +111,9 @@ export default {
       return this.$route.query.deptName;
     },
     ...mapState({
-      userId:state =>state.user.userData.userId,
-      realName:state =>state.user.userData.realName
-    })
+      userId: (state) => state.user.userData.userId,
+      realName: (state) => state.user.userData.realName,
+    }),
   },
 
   methods: {
@@ -157,29 +162,33 @@ export default {
         const id = row.id;
         await this.$store.dispatch("updatePatientStatus", { status, id });
         this.$message({
-              message: "叫号成功",
-              type: "success",
-              showClose: true,
-            });
-            this.queryPatientByDeptId()
+          message: "叫号成功",
+          type: "success",
+          showClose: true,
+        });
+        this.queryPatientByDeptId();
       } catch (error) {}
     },
 
     // 诊断结果
-   toDiagnosis(row){
-    console.log(this.userId)
-       const data = {
-        id:row.id,
-        patientId:row.patientId,
-        patientName:row.patientName,
-        deptId: row.deptId,
-        deptName:this.deptName,
-        userId:this.userId,
-        realName:this.realName
-      }
+    toDiagnosis(row) {
+      console.log(row);
+      //  const data = {
+      const id = row.id;
+      const patientId = row.patientId;
+      const patientName = row.patientName;
+      const deptId = row.deptId;
+      console.log(deptId)
+      const deptName = this.deptName;
+      const userId = this.userId;
+      const realName = this.realName;
+      // }
       // const userid = JSON.parse(JSON.stringify(this.userId))
-      this.$router.push({path:'/DiagnosisResult',query:{data:data}})
-    }
+      this.$router.push({
+        path: "/DiagnosisResult",
+        query: { id: id, patientId: patientId, patientName: patientName, 
+      deptId:deptId,deptName:deptName,userId:userId,realName:realName}});
+    },
   },
 };
 </script>

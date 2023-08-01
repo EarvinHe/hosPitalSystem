@@ -57,7 +57,7 @@ export default {
   },
   computed: {
     queryData() {
-      return this.$route.query.data;
+      return this.$route.query;
     },
   },
   mounted() {
@@ -65,6 +65,7 @@ export default {
   },
   methods: {
     showData() {
+      console.log(this.$route.query)
       this.resultForm = this.queryData;
     },
 

@@ -158,7 +158,6 @@ const routes = [
     {
         // 
         path: '/triageDetail/:deptId',//默认路径
-        // path:'/triageDetail',//默认路径
         name: 'triageDetail',
         // component: () => import ('../views/login/Login'),//懒加载
         component: TriageDetail
@@ -166,91 +165,78 @@ const routes = [
     {
         // 
         path: '/diagnosisResult',//默认路径
-        // path:'/triageDetail',//默认路径
         name: 'diagnosisResult',
         // component: () => import ('../views/login/Login'),//懒加载
         component: DiagnosisResult
     },
     {
         path: '/log',//默认路径
-        // path:'/triageDetail',//默认路径
         name: 'log',
         // component: () => import ('../views/login/Login'),//懒加载
         component: Log
     },
     {
         path: '/log2',//默认路径
-        // path:'/triageDetail',//默认路径
         name: 'log2',
         // component: () => import ('../views/login/Login'),//懒加载
         component: Log2
     },
     {
         path: '/dutyList',//默认路径
-        // path:'/triageDetail',//默认路径
         name: 'dutyList',
         // component: () => import ('../views/login/Login'),//懒加载
         component: DutyList
     },
     {
         path: '/dutyManager/:deptId',//默认路径
-        // path:'/triageDetail',//默认路径
         name: 'dutyManager',
         // component: () => import ('../views/login/Login'),//懒加载
         component: DutyManager
     },
     {
         path: '/addDuty/:deptId',//默认路径
-        // path:'/triageDetail',//默认路径
         name: 'addDuty',
         // component: () => import ('../views/login/Login'),//懒加载
         component: AddDuty
     },
     {
         path: '/noticeList',//默认路径
-        // path:'/triageDetail',//默认路径
         name: 'noticeList',
         // component: () => import ('../views/login/Login'),//懒加载
         component: NoticeList
     },
     {
         path: '/addNotice',//默认路径
-        // path:'/triageDetail',//默认路径
         name: 'addNotice',
         // component: () => import ('../views/login/Login'),//懒加载
         component: AddNotice
     },
     {
         path: '/updateNotice',//默认路径
-        // path:'/triageDetail',//默认路径
         name: 'updateNotice',
         // component: () => import ('../views/login/Login'),//懒加载
         component: UpdateNotice
     },
     {
         path: '/fileList',//默认路径
-        // path:'/triageDetail',//默认路径
         name: 'fileList',
         // component: () => import ('../views/login/Login'),//懒加载
         component: FileList
     },
     {
         path: '/addFile',//默认路径
-        // path:'/triageDetail',//默认路径
         name: 'addFile',
         // component: () => import ('../views/login/Login'),//懒加载
         component: AddFile
     },
     {
         path: '/test',//默认路径
-        // path:'/triageDetail',//默认路径
         name: 'test',
         // component: () => import ('../views/login/Login'),//懒加载
         component: test
     },
     {
         path: '/test1',//默认路径
-        // path:'/triageDetail',//默认路径
         name: 'test1',
         // component: () => import ('../views/login/Login'),//懒加载
         component: test1
@@ -258,7 +244,6 @@ const routes = [
 
     {
         path: '/downLoadPatient',//默认路径
-        // path:'/triageDetail',//默认路径
         name: 'downLoadPatient',
         // component: () => import ('../views/login/Login'),//懒加载
         component: DownLoadPatient
@@ -278,7 +263,7 @@ const router = new VueRouter({
 
 // 备份push和replace
 let originPush = VueRouter.prototype.push;
-let originReplace = VueRouter.prototype.push;
+let originReplace = VueRouter.prototype.replace;
 
 // 重写push/replace方法
 // 第一步（第一个参数）：告诉原来的push方法，你往哪里跳转，（传递哪些参数）
@@ -305,53 +290,34 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
 //路由守卫
 router.beforeEach((to, from, next) => {
     const token = store.state.user.userToken
-    const name = store.state.user.userName
     // 管理系统常见的两个金典逻辑：
     // 1.如果用户访问登录页面，但token已经存在，跳转到首页
     if (token) {
         // token存在的情况：
         // (1)已经存在token还访问login：
-        if (to.path === '/login') {
+        if (to.path == '/login') {
             next('/')//那么重定向到首页
-        } else {
-            // 已经有token，但去的不是登录
-            // 那么如果用户名已存在，放行
-            if (name) {
-                next()
-            } else {
-                // 用户名不存在：（有可能localStorage中的用户名被误操作所清除）
-                //只能重新登录一遍
-                next('/login')
-            }
         }
-    } else {
+    }
+    else {
         // 如果token不存在，明显未登录或者未注册
         // 但是还要往其他页面跳转
-        if (to.path !== '/login') {
-
-            if (to.path === '/regist') {
-                next()
-            } else {
-                // 强制往登录跳转
-                next('/login')
-            }
+        /*  if (to.path !== '/login' && to.path !== '/regist') {
+             // 该if语句表示只有login和regist放行，如果去的不是这两，那么强制去登录页 
+                 console.log(111)  
+                 next('/login')
+         } */
+        if (to.path == "/login" || to.path == "/regist") {
+            // 用户未登录或未注册，访问的是登录页或注册页，放行
+            next();
+        } else {
+            // 用户未登录，访问的是其他页面，重定向到登录页
+            next("/login");
         }
-
+        // next()
     }
     next()
-})
-
-
-/*   if(to.path === '/login' && token){
-      next('/')
-      return
-  }
-  // 2.如果访问的不是登录页面，但是没有token，跳转岛登录页面
-  if(to.path !== '/login' && !token){
-      next('/login')
-      return
-  }
-  next() */
-
+}
+)
 
 export default router;

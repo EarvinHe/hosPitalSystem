@@ -258,7 +258,11 @@ export const reqDownLoad =(fileId)=>requests({
 
 // 下载患者诊断书
 export const reqDownLoadPatient = (patientId,deptId)=>requests({
-    url:`/file/download/patient/${patientId}/${deptId}`,method:'get'
+    url:`/file/download/patient/${patientId}/${deptId}`,method:'get',
+    headers:{
+        'Content-Type': 'application/pdf'
+    },
+    responseType:'blob'
 })
 
 // 根据patientId查已经有几科诊断结束  /patientDept/{patientId}
