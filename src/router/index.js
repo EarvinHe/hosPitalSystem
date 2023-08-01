@@ -35,6 +35,8 @@ import test from '@/views/file/test'
 import test1 from '@/views/file/test1'
 import DownLoadPatient from '@/views/patient/DownLoadPatient'
 import Carousel from '@/views/home/carousel'
+import Users from '@/views/superManager/Users'
+import UserList from '@/views/superManager/UserList'
 Vue.use(VueRouter);
 
 const routes = [
@@ -247,6 +249,21 @@ const routes = [
         name: 'downLoadPatient',
         // component: () => import ('../views/login/Login'),//懒加载
         component: DownLoadPatient
+    },
+
+    // 用户管理模块（超级管理员）
+    {
+        path: '/users',//默认路径U
+        name: 'users',
+        // component: () => import ('../views/login/Login'),//懒加载
+        component: Users
+    },
+
+    {
+        path: '/userList/:deptId',//默认路径U
+        name: 'userList',
+        // component: () => import ('../views/login/Login'),//懒加载
+        component: UserList
     },
 ]
 

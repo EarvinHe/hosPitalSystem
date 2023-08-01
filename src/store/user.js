@@ -2,14 +2,15 @@
 // 但登录功能直接写在了login组件当中，因为并没有用到仓库,
 // 最后又加上了loginApi因为发现要借用该请求存储userId到state
 import { setToken,getToken,removeToken,setUserName,gettUserName,removeUsername,setUserData,getUserData, removeUserData } from "@/util/token";
-import { loginApi, reqUserRegist, reqAllDepts,reqLogout} from "../api/index";
+import { loginApi, reqUserRegist, reqAllDepts,reqLogout,reqAllDoctors} from "../api/index";
 const state = {
     // 存储请求返回的数据到仓库，初始为空,
     // 是否为字符串或者对象还是数组得看请求的数据是什么样子的
     deptInfo: {},
     userName:gettUserName(),
     userToken:getToken(),
-    userData:getUserData()
+    userData:getUserData(),
+    doctorsData:[]
 }
 const mutations = {
 
@@ -40,6 +41,10 @@ const mutations = {
         removeUserData(),
         removeToken();
         removeUsername();
+    },
+
+    ALLDOCTORS(state,doctorsData){
+        state.doctorsData = doctorsData
     }
 }
 const actions = {
@@ -82,8 +87,18 @@ const actions = {
         }
     },
 
-    // 用户登出,没有参数data，无须在{commit}后加参数
+    // 用户登出,没有参数data，无须在{commit}后加参数(为区分前面的请求，user改为了doctor)
     async userLogout({commit}){
+        let result = await reqAllDoctors();
+        if(result.flag == true){
+            commit('ALLDOCTORS')
+        }else{
+            return result.msg
+        }
+    },
+
+    // 根据科室id分页查询所有医生
+    async queryAllDoctors({commit},deptId){
         let result = await reqLogout();
         if(result.flag == true){
             commit('USERLOGOUT')

@@ -198,7 +198,7 @@ export const reqDutyWorkByDept = (deptId, page,pageSize,realName) => requests({
 
 // 根据科室id查医生id(值班表添加)
 export const reqQueryUserByDeptId = (deptId)=>requests({
-    url:`/user/${deptId}`,method:'get'
+    url:`/user/dept/${deptId}`,method:'get'
 })
 
 // 删除值班表 /work/{workId}
@@ -268,4 +268,9 @@ export const reqDownLoadPatient = (patientId,deptId)=>requests({
 // 根据patientId查已经有几科诊断结束  /patientDept/{patientId}
 export const reqOverPatientCount =(patientId)=>requests({
     url:`/patientDept/${patientId}`,method:'get'
+})
+
+// 根据科室id分页查询所有医生  /user/page/{deptId}
+export const reqAllDoctors = ()=>requests({
+    url:`/user/page/${deptId}`,method:'get'
 })

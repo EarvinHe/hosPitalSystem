@@ -4,6 +4,7 @@
       <!-- 导入el表单 -->
       <h1 class="registTitle">用户注册</h1>
       <el-form
+      size="small"
         ref="registForm"
         :rules="rules"
         :model="registForm"
@@ -78,7 +79,14 @@
         </el-form-item> -->
 
         <el-form-item label="选择科室">
-          <el-select  placeholder="请选择科室" v-model="registForm.deptId">
+          <el-select style="width: 420px;"  placeholder="请选择科室" v-model="registForm.deptId">
+            <el-option v-for="(dept,index) in deptInfo" :key="dept.deptId" :label="dept.deptName" :value="dept.deptId">{{ dept.deptName }}</el-option>
+            <!-- <el-option label="脑科" value="脑科">脑科</el-option>s -->
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="添加权限">
+          <el-select style="width: 420px;" multiple placeholder="请选择科室" v-model="registForm.deptId">
             <el-option v-for="(dept,index) in deptInfo" :key="dept.deptId" :label="dept.deptName" :value="dept.deptId">{{ dept.deptName }}</el-option>
             <!-- <el-option label="脑科" value="脑科">脑科</el-option>s -->
           </el-select>
@@ -112,7 +120,7 @@ export default {
         deptId:"",
         realName: "",
         birth: "",
-        sex:1,
+        sex:'',
         mobile: "",
         email: "",
         image:''

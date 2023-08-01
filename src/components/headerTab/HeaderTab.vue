@@ -12,11 +12,16 @@
       <a>{{ userName }}</a>
       <li class="spacer"></li>
       <a @click="logout">退出登录</a>
+      <li class="spacer"></li>
+     <i class="el-icon-user-solid" style="height: 20px;width: 20px;" @click="toManager"></i>
     </ul>
+    <SuperManager ref="SuperManager"></SuperManager>
   </div>
+  
 </template>
 
 <script>
+import SuperManager from '@/views/superManager/SuperManager'
 import { mapGetters } from 'vuex';
 export default {
   data() {
@@ -24,12 +29,21 @@ export default {
       AdminName: "",
     };
   },
+  components:{
+    SuperManager
+  },
   computed: {
     ...mapGetters(['userName'])
   },
 
 
   methods: {
+    toManager(){
+      this.$refs.SuperManager.openDrawer()
+      console.log(111)
+    },
+
+    // 登出
     async logout() {
       try {
         await this.$store.dispatch("userLogout");
@@ -42,6 +56,11 @@ export default {
         alert(error.msg);
       }
     },
+
+    //超级管理员的权限，用户设置等
+    userManager(){
+      
+    }
   },
 };
 </script>
@@ -79,6 +98,7 @@ export default {
       color: #666;
     }
     a:hover {
+      cursor: pointer;
       color: #50a0a0;
     }
     .Regist {
@@ -87,6 +107,10 @@ export default {
     .Login {
       margin: 0px 10px;
     }
+   .el-icon-user-solid:hover{
+    cursor: pointer;
+    color: #50a0a0;
+   }
   }
 }
 </style>
