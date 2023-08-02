@@ -40,7 +40,6 @@ export default {
   methods: {
     toManager(){
       this.$refs.SuperManager.openDrawer()
-      console.log(111)
     },
 
     // 登出

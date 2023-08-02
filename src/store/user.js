@@ -89,19 +89,21 @@ const actions = {
 
     // 用户登出,没有参数data，无须在{commit}后加参数(为区分前面的请求，user改为了doctor)
     async userLogout({commit}){
-        let result = await reqAllDoctors();
+        let result = await reqLogout();
         if(result.flag == true){
-            commit('ALLDOCTORS')
+            commit('USERLOGOUT')
         }else{
             return result.msg
         }
     },
 
     // 根据科室id分页查询所有医生
-    async queryAllDoctors({commit},deptId){
-        let result = await reqLogout();
+    async queryAllDoctors({commit},{deptId,page,pageSize,realName}){
+        let result = await reqAllDoctors(deptId,page,pageSize,realName);
         if(result.flag == true){
-            commit('USERLOGOUT')
+            commit('ALLDOCTORS',result.data)
+        }else{
+            return result.msg
         }
     }
 }
@@ -114,6 +116,10 @@ const getters = {
     },
     userName(state){
         return state.userName
+    },
+    // 用户（医生）信息
+    doctorsData(state){
+        return state.doctorsData
     }
 }
 

@@ -271,6 +271,10 @@ export const reqOverPatientCount =(patientId)=>requests({
 })
 
 // 根据科室id分页查询所有医生  /user/page/{deptId}
-export const reqAllDoctors = ()=>requests({
-    url:`/user/page/${deptId}`,method:'get'
+export const reqAllDoctors = (deptId,page,pageSize,realName)=>requests({
+    url:`/user/page/${deptId}`,method:'get', params: {
+        page: page,
+        pageSize: pageSize,
+        realName:realName
+    }
 })

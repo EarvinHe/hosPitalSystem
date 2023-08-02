@@ -86,7 +86,7 @@
         </el-form-item>
 
         <el-form-item label="添加权限">
-          <el-select style="width: 420px;" multiple placeholder="请选择科室" v-model="registForm.deptId">
+          <el-select style="width: 420px;" multiple placeholder="请选择要添加的权限" v-model="registForm.deptId">
             <el-option v-for="(dept,index) in deptInfo" :key="dept.deptId" :label="dept.deptName" :value="dept.deptId">{{ dept.deptName }}</el-option>
             <!-- <el-option label="脑科" value="脑科">脑科</el-option>s -->
           </el-select>

@@ -10,7 +10,7 @@
   <el-divider></el-divider>
   <span class="el-icon-user" @click="toUsers">用户管理</span>
 
-  <span class="el-icon-plus">添加用户</span>
+  <span class="el-icon-plus" @click="toAddUser">添加用户</span>
   
   <span class="el-icon-refresh">更新用户</span>
 
@@ -30,6 +30,9 @@ export default {
     },
     toUsers(){
       this.$router.push('/users')
+    },
+    toAddUser(){
+      this.$router.push('/regist')
     }
   },
 };
