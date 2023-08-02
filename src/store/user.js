@@ -3,7 +3,7 @@
 // 最后又加上了loginApi因为发现要借用该请求存储userId到state
 import { setToken,getToken,removeToken,setUserName,gettUserName,removeUsername,setUserData,getUserData, removeUserData } from "@/util/token";
 import { loginApi, reqUserRegist, reqDeptWhenRegist,reqLogout,reqAllDoctors,
-reqAllDeptAndUser} from "../api/index";
+reqAllDeptAndUser,reqDeleteUser} from "../api/index";
 const state = {
     // 存储请求返回的数据到仓库，初始为空,
     // 是否为字符串或者对象还是数组得看请求的数据是什么样子的
@@ -125,6 +125,14 @@ const actions = {
     },
 
     // 删除用户（医生）
+    async deleteUser({commit},userId){
+        let result = await reqDeleteUser(userId);
+        if(result.flag == true){
+           return 'ok'
+        }else{
+            return result.msg
+        }
+    }
 }
 const getters = {
     // 计算属性，将其数据简化，在组件中方便使用
