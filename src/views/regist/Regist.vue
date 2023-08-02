@@ -85,9 +85,9 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="添加权限">
-          <el-select style="width: 420px;" multiple placeholder="请选择要添加的权限" v-model="registForm.deptId">
-            <el-option v-for="(dept,index) in deptInfo" :key="dept.deptId" :label="dept.deptName" :value="dept.deptId">{{ dept.deptName }}</el-option>
+        <el-form-item label="选择职位">
+          <el-select style="width: 420px;" multiple placeholder="请选择你的职位" v-model="registForm.authId">
+            <el-option v-for="(auth,index) in allAuths" :key="auth.authId" :label="auth.authDesc" :value="auth.authId">{{ auth.authDesc }}</el-option>
             <!-- <el-option label="脑科" value="脑科">脑科</el-option>s -->
           </el-select>
         </el-form-item>
@@ -109,7 +109,7 @@
 <script>
 let _fileObj;
 import axios from 'axios';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 export default {
   name: "regist",
   data() {
@@ -118,6 +118,7 @@ export default {
         userName: "",
         password: "",
         deptId:"",
+        authId:[],
         realName: "",
         birth: "",
         sex:'',
@@ -149,19 +150,33 @@ export default {
   mounted(){
     // 注册页面加载时查询所有科室,测试返回的数据格式
     this.$store.dispatch("selectAllDepts",{})
+    // 注册时查询所有可供选择的职位
+    this.$store.dispatch('queryAllAuth')
+    
+    // console.log(JSON.parse(JSON.stringify (this.allAuths)))
   },
   computed: {
-    ...mapGetters(['deptInfo'])
+    ...mapGetters(['deptInfo']),
+    ...mapState({
+      allAuths:state=>state.auth.allAuths
+    })
+
   },
   methods: {
     // 用户注册
    async userRegist() {
     try {
-      // 将参数结构赋值
-      const {birth,deptId,email,mobile,password,realName,sex,userName} = this;
+      // 用es6中的map方法，先将authId数组中的每个元素转化成对象，
+      // 之所以转化成对象，是因为后端数据库结构如此，没办法
+      const authArray = this.registForm.authId.map(item=>({authId:item}))
+      console.log(authArray)
+      
+ /*      // 将参数结构赋值
+      const {birth,deptId,email,mobile,password,realName,sex,userName} = this; */
       await this.$store.dispatch("userRegist", {
         birth:this.registForm.birth,
         deptId:this.registForm.deptId,
+        auths:authArray,
         email:this.registForm.email,
         mobile:this.registForm.mobile,
         password:this.registForm.password,
@@ -170,7 +185,7 @@ export default {
         userName:this.registForm.userName,
         image:this.registForm.image
       });
-      this.$router.push('/login')
+      this.$router.push('/UserList')
     } catch (error) {
       alert(error.msg)
     } 

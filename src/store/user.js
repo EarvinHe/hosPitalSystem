@@ -2,7 +2,8 @@
 // 但登录功能直接写在了login组件当中，因为并没有用到仓库,
 // 最后又加上了loginApi因为发现要借用该请求存储userId到state
 import { setToken,getToken,removeToken,setUserName,gettUserName,removeUsername,setUserData,getUserData, removeUserData } from "@/util/token";
-import { loginApi, reqUserRegist, reqAllDepts,reqLogout,reqAllDoctors} from "../api/index";
+import { loginApi, reqUserRegist, reqDeptWhenRegist,reqLogout,reqAllDoctors,
+reqAllDeptAndUser} from "../api/index";
 const state = {
     // 存储请求返回的数据到仓库，初始为空,
     // 是否为字符串或者对象还是数组得看请求的数据是什么样子的
@@ -10,7 +11,8 @@ const state = {
     userName:gettUserName(),
     userToken:getToken(),
     userData:getUserData(),
-    doctorsData:[]
+    doctorsData:[],
+    deptUserData: []
 }
 const mutations = {
 
@@ -45,7 +47,13 @@ const mutations = {
 
     ALLDOCTORS(state,doctorsData){
         state.doctorsData = doctorsData
-    }
+    },
+
+    // 将数据存储，deptInfo实际上是请求返回的result.data
+    SHOWUSERANDDEPTS(state, deptUserData) {
+    state.deptUserData = deptUserData;
+},
+
 }
 const actions = {
 
@@ -80,8 +88,8 @@ const actions = {
     },
 
     // 在注册页面展示时查询所有科室
-    async selectAllDepts({ commit }, data) {
-        let result = await reqAllDepts(data);
+    async selectAllDepts({ commit }) {
+        let result = await reqDeptWhenRegist();
         if (result.flag == true) {
             commit('SELECTALLDEPTS', result.data)
         }
@@ -97,6 +105,15 @@ const actions = {
         }
     },
 
+    // 查所有部门和人数
+     // 在科室管理页面展示所有科室
+     async showUserAndDepts({ commit }) {
+        let result = await reqAllDeptAndUser();
+        if (result.flag == true) {
+            commit('SHOWUSERANDDEPTS', result.data)
+        }
+    },
+
     // 根据科室id分页查询所有医生
     async queryAllDoctors({commit},{deptId,page,pageSize,realName}){
         let result = await reqAllDoctors(deptId,page,pageSize,realName);
@@ -105,7 +122,9 @@ const actions = {
         }else{
             return result.msg
         }
-    }
+    },
+
+    // 删除用户（医生）
 }
 const getters = {
     // 计算属性，将其数据简化，在组件中方便使用
@@ -120,7 +139,10 @@ const getters = {
     // 用户（医生）信息
     doctorsData(state){
         return state.doctorsData
-    }
+    },
+    deptUserData(state){
+        return state.deptUserData||[];
+    },
 }
 
 export default {

@@ -19,9 +19,17 @@ export const reqUserRegist = (data) => requests({
     url: '/user/register', data, method: 'post'
 })
 
-// 查询所有科室（注册页面，科室管理）
+// 查询所有科室（分诊管理，科室管理）
 export const reqAllDepts = (data) => requests({
     url: '/dept', data, method: 'get'
+})
+// 查询所有科室+部门（用户管理）
+export const reqAllDeptAndUser = () => requests({
+    url: 'user/dept', method: 'get'
+})
+// 注册查询科室
+export const reqDeptWhenRegist = ()=>requests({
+    url:'/dept/list',method:'get',
 })
 
 // export const reqAllDepts = () => requests({
@@ -241,11 +249,11 @@ export const reqDeleteFile =(fileId)=>requests({
     url:`file/${fileId}`,method:'delete'
 })
 
-/* // 添加文件
-export const reqAddFile = (uploadFile)=>requests({
-    url:'http://localhost:8080/file/upload/common',method:'post',uploadFile
+// 添加文件
+export const reqAddFile = (data)=>requests({
+    url:'http://localhost:8080/file/upload/common',method:'post',data
 
-}) */
+})
 
 // 下载共享文档
 export const reqDownLoad =(fileId)=>requests({
@@ -277,4 +285,14 @@ export const reqAllDoctors = (deptId,page,pageSize,realName)=>requests({
         pageSize: pageSize,
         realName:realName
     }
+})
+
+// 职位模块   查询所有职位（注册用到了） /auth/list
+export const reqAllAuth = ()=>requests({
+    url:'/auth/list',method:'get'
+})
+
+// 删除用户（医生，院长）  /user/{userId}
+export const reqDeleteUser = (userId)=>requests({
+    url:`/user/${userId}`,method:'delete'
 })

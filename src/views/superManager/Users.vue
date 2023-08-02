@@ -36,16 +36,16 @@ export default {
     };
   },
   mounted() {
-    this.getDeptData();
+    this.getData();
   },
   computed: {
-    ...mapGetters(["deptData"]),
+    ...mapGetters(["deptUserData"]),
     // ...mapGetters(['patientCount'])
   },
   methods: {
-    async getDeptData() {
-      await this.$store.dispatch("showAllDepts");
-      const allDepts = JSON.parse(JSON.stringify(this.deptData));
+    async getData() {
+      await this.$store.dispatch("showUserAndDepts");
+      const allDepts = JSON.parse(JSON.stringify(this.deptUserData));
       this.allDepts = allDepts;
     },
 

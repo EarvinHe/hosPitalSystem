@@ -157,7 +157,7 @@
       async deleteThisRow(row) {
         try {
           await this.$store.dispatch("deleteWork", row.workId);
-          if((this.dutyWorkData.total-1)%this.pageSize == 0){
+          if((this.tableData.total-1)%this.pageSize == 0){
             await this.$store.dispatch("pageWorkByDept", {
             deptId: this.deptId,
             page: this.page-1,
