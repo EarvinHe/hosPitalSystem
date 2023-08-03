@@ -9,7 +9,7 @@
         >+添加用户</el-button
       >
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column :label="'值班信息   '" align="center">
+        <el-table-column :label="'用户（医生）信息   '" align="center">
           <el-table-column prop="userId" label="ID" width="150" align="center">
           </el-table-column>
 
@@ -28,6 +28,22 @@
           </el-table-column>
 
           <el-table-column
+            prop="auths[0].authDesc"
+            label="职位1"
+            width="100"
+            align="center"
+          >
+          </el-table-column>
+
+          <el-table-column
+            prop="auths[1].authDesc"
+            label="职位2"
+            width="100"
+            align="center"
+          >
+          </el-table-column>
+
+          <el-table-column
             prop="mobile"
             label="联系电话"
             width="150"
@@ -38,8 +54,9 @@
           <el-table-column prop="email" label="邮箱" width="180" align="center">
           </el-table-column>
 
-          <el-table-column label="操作" width="100" align="center">
+          <el-table-column label="操作" width="150" align="center">
             <template slot-scope="scope">
+              <el-button size="mini" @click="toUpdateUser(scope.row)">编辑</el-button>
               <el-button
                 size="mini"
                 type="danger"
@@ -57,20 +74,27 @@
           :current-page.sync="page"
           :page-size="pageSize"
           layout="prev, pager, next, jumper"
-          :total="tableData.total"
+          :total="doctorsData.total"
         >
         </el-pagination>
       </div>
     </div>
+    <!-- 添加一个自定义事件，以在dialog关闭时触发重新刷新页面数据 -->
+    <UserUpdate ref="UserUpdate" @refresh-data="refreshData"></UserUpdate>
   </div>
 </template>
     
-    <script>
+<script>
+import UserUpdate from "./UserUpdate.vue";
 import { mapGetters, mapState } from "vuex";
 export default {
+  components:{
+    UserUpdate
+  },
   data() {
     return {
-      tableData: [],
+      tableData: [
+      ],
       page: 1,
       pageSize: 2,
       realName: null,
@@ -79,6 +103,7 @@ export default {
   },
   mounted() {
     this.pageUsers();
+    
   },
   computed: {
     /*  ...mapState({
@@ -91,6 +116,7 @@ export default {
     records() {
       return this.doctorsData.records;
     },
+
   },
 
   methods: {
@@ -101,6 +127,7 @@ export default {
     // 翻页时分页查询
     async handleCurrentChange(val) {
       try {
+        console.log(this.doctorsData)
         await this.$store.dispatch("queryAllDoctors", {
           deptId: this.deptId,
           page: val,
@@ -120,9 +147,9 @@ export default {
           pageSize: this.pageSize,
           realName: this.realName,
         });
-        // console.log(this.doctorsData)
         this.tableData = this.records;
-        console.log(this.tableData);
+        // this.tableData.push(this.authDesc) 
+        console.log(this.tableData)
       } catch (error) {}
     },
 
@@ -133,21 +160,23 @@ export default {
           name: "addDuty",
           params: { deptId: deptId },
         });
+        
       } catch (error) {}
     },
 
     // 删除这条数据
     async deleteThisRow(row) {
       try {
-        await this.$store.dispatch("deleteUser", row.workId);
-        if ((this.tableData.total - 1) % this.pageSize == 0) {
+        await this.$store.dispatch("deleteUser", row.userId);
+        console.log((this.doctorsData.total - 1) % this.pageSize == 0)
+        if ((this.doctorsData.total - 1) % this.pageSize == 0) {
           await this.$store.dispatch("queryAllDoctors", {
             deptId: this.deptId,
             page: this.page - 1,
             pageSize: this.pageSize,
             realName: this.realName,
           });
-          this.tableData = this.doctorsData;
+          this.tableData = this.records;
           this.$message({
             message: "删除成功",
             type: "success",
@@ -158,6 +187,15 @@ export default {
         }
       } catch (error) {}
     },
+
+    // 去修改
+    toUpdateUser(row){
+      this.$refs.UserUpdate.openUpdateDialog(row)
+    },
+    //自定义刷新数据事件
+    refreshData(){
+      this.pageUsers()
+    }
   },
 };
 </script>

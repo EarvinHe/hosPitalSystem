@@ -287,7 +287,7 @@ export const reqAllDoctors = (deptId,page,pageSize,realName)=>requests({
     }
 })
 
-// 职位模块   查询所有职位（注册用到了） /auth/list
+// 职位模块   查询所有职位（注册,和职位模块用到了） /auth/list
 export const reqAllAuth = ()=>requests({
     url:'/auth/list',method:'get'
 })
@@ -295,4 +295,34 @@ export const reqAllAuth = ()=>requests({
 // 删除用户（医生，院长）  /user/{userId}
 export const reqDeleteUser = (userId)=>requests({
     url:`/user/${userId}`,method:'delete'
+})
+
+// 根据userId查用户（修改用户）  /user/{userId}
+export const reqUserByUserId = (userId)=>requests({
+    url:`/user/${userId}`,method:'get'
+})
+
+// 根据userId修改用户 /user
+export const reqUpdateByUserId = (data)=>requests({
+    url:'/user',method:'put',data
+})
+
+// 查询所有权限（添加职位时用） /menu/list
+export const reqAllMenu = ()=>requests({
+    url:'/menu/list',method:'get'
+})
+
+// 添加职位  /auth/add  
+export const reqAddAuth = (data)=>requests({
+    url:'/auth/add',method:'post',data
+})
+
+// 删除职位  /auth/delete/{authId}
+export const reqDeleteAuth = (authId)=>requests({
+    url:`/auth/delete/${authId}`,method:'delete'
+})
+
+// 修改职位  /auth/update
+export const reqUpdateAuth = (data)=>requests({
+    url:"/auth/update",method:'put',data
 })

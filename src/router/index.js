@@ -37,6 +37,7 @@ import DownLoadPatient from '@/views/patient/DownLoadPatient'
 import Carousel from '@/views/home/carousel'
 import Users from '@/views/superManager/Users'
 import UserList from '@/views/superManager/UserList'
+import Auth from '@/views/superManager/Auth'
 Vue.use(VueRouter);
 
 const routes = [
@@ -264,6 +265,12 @@ const routes = [
         name: 'userList',
         // component: () => import ('../views/login/Login'),//懒加载
         component: UserList
+    },
+    {
+        path: '/auth',//默认路径U
+        name: 'auth',
+        // component: () => import ('../views/login/Login'),//懒加载
+        component: Auth
     },
 ]
 

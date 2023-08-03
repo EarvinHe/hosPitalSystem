@@ -3,7 +3,7 @@
 // 最后又加上了loginApi因为发现要借用该请求存储userId到state
 import { setToken,getToken,removeToken,setUserName,gettUserName,removeUsername,setUserData,getUserData, removeUserData } from "@/util/token";
 import { loginApi, reqUserRegist, reqDeptWhenRegist,reqLogout,reqAllDoctors,
-reqAllDeptAndUser,reqDeleteUser} from "../api/index";
+reqAllDeptAndUser,reqDeleteUser,reqUserByUserId,reqUpdateByUserId} from "../api/index";
 const state = {
     // 存储请求返回的数据到仓库，初始为空,
     // 是否为字符串或者对象还是数组得看请求的数据是什么样子的
@@ -132,6 +132,27 @@ const actions = {
         }else{
             return result.msg
         }
+    },
+
+    //  根据userId查用户（修改用户）
+    async queryUserByUserId({commit},userId){
+        let result = await reqUserByUserId(userId);
+        if(result.flag == true){
+            commit('QUERYUSERBYUSERID',result.data)
+         }else{
+             return result.msg
+         }
+    },
+
+    // 修改用户信息
+    async updateUserByUserId({commit},data){
+        let result = await reqUpdateByUserId(data);
+        if(result.flag == true){
+            // commit('UPDATEUSERBYUSERID',result.data)
+            return 'ok'
+         }else{
+             return result.msg
+         }
     }
 }
 const getters = {

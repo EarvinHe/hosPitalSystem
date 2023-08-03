@@ -12,7 +12,7 @@
 
   <span class="el-icon-plus" @click="toAddUser">添加用户</span>
   
-  <span class="el-icon-refresh">更新用户</span>
+  <span class="el-icon-refresh" @click="toAuth">职位/权限</span>
 
 
   </el-drawer>
@@ -33,6 +33,9 @@ export default {
     },
     toAddUser(){
       this.$router.push('/regist')
+    },
+    toAuth(){
+      this.$router.push('/auth')
     }
   },
 };

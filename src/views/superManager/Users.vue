@@ -49,7 +49,7 @@ export default {
       this.allDepts = allDepts;
     },
 
-    // 点击去分诊
+    // 点击去用户管理
     toUserList(deptId, deptName) {
       this.$router.push({
         name: "userList",
