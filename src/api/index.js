@@ -32,9 +32,9 @@ export const reqDeptWhenRegist = ()=>requests({
     url:'/dept/list',method:'get',
 })
 
-// export const reqAllDepts = () => requests({
+/* // export const reqAllDepts = () => requests({
 //     url:'/dept',method:'get'
-// })
+// }) */
 
 // /user/logout 退出登录
 export const reqLogout = () => requests({
