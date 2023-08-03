@@ -5,8 +5,7 @@ passWord true 普通参数 string 密码 */
 export const loginApi = (data) => requests({
     // user表下面查询用户
     url: '/user/login', method: 'post', data
-    , header: {
-        
+    , header: {    
         'Content-Type': 'application/json'
     }
 })
@@ -20,14 +19,22 @@ export const reqUserRegist = (data) => requests({
     url: '/user/register', data, method: 'post'
 })
 
-// 查询所有科室（注册页面，科室管理）
+// 查询所有科室（分诊管理，科室管理）
 export const reqAllDepts = (data) => requests({
     url: '/dept', data, method: 'get'
 })
+// 查询所有科室+部门（用户管理）
+export const reqAllDeptAndUser = () => requests({
+    url: 'user/dept', method: 'get'
+})
+// 注册查询科室
+export const reqDeptWhenRegist = ()=>requests({
+    url:'/dept/list',method:'get',
+})
 
-// export const reqAllDepts = () => requests({
+/* // export const reqAllDepts = () => requests({
 //     url:'/dept',method:'get'
-// })
+// }) */
 
 // /user/logout 退出登录
 export const reqLogout = () => requests({
@@ -199,7 +206,7 @@ export const reqDutyWorkByDept = (deptId, page,pageSize,realName) => requests({
 
 // 根据科室id查医生id(值班表添加)
 export const reqQueryUserByDeptId = (deptId)=>requests({
-    url:`/user/${deptId}`,method:'get'
+    url:`/user/dept/${deptId}`,method:'get'
 })
 
 // 删除值班表 /work/{workId}
@@ -242,11 +249,11 @@ export const reqDeleteFile =(fileId)=>requests({
     url:`file/${fileId}`,method:'delete'
 })
 
-/* // 添加文件
-export const reqAddFile = (uploadFile)=>requests({
-    url:'http://localhost:8080/file/upload/common',method:'post',uploadFile
+// 添加文件
+export const reqAddFile = (data)=>requests({
+    url:'http://localhost:8080/file/upload/common',method:'post',data
 
-}) */
+})
 
 // 下载共享文档
 export const reqDownLoad =(fileId)=>requests({
@@ -259,10 +266,63 @@ export const reqDownLoad =(fileId)=>requests({
 
 // 下载患者诊断书
 export const reqDownLoadPatient = (patientId,deptId)=>requests({
-    url:`/file/download/patient/${patientId}/${deptId}`,method:'get'
+    url:`/file/download/patient/${patientId}/${deptId}`,method:'get',
+    headers:{
+        'Content-Type': 'application/pdf'
+    },
+    responseType:'blob'
 })
 
 // 根据patientId查已经有几科诊断结束  /patientDept/{patientId}
 export const reqOverPatientCount =(patientId)=>requests({
     url:`/patientDept/${patientId}`,method:'get'
+})
+
+// 根据科室id分页查询所有医生  /user/page/{deptId}
+export const reqAllDoctors = (deptId,page,pageSize,realName)=>requests({
+    url:`/user/page/${deptId}`,method:'get', params: {
+        page: page,
+        pageSize: pageSize,
+        realName:realName
+    }
+})
+
+// 职位模块   查询所有职位（注册,和职位模块用到了） /auth/list
+export const reqAllAuth = ()=>requests({
+    url:'/auth/list',method:'get'
+})
+
+// 删除用户（医生，院长）  /user/{userId}
+export const reqDeleteUser = (userId)=>requests({
+    url:`/user/${userId}`,method:'delete'
+})
+
+// 根据userId查用户（修改用户）  /user/{userId}
+export const reqUserByUserId = (userId)=>requests({
+    url:`/user/${userId}`,method:'get'
+})
+
+// 根据userId修改用户 /user
+export const reqUpdateByUserId = (data)=>requests({
+    url:'/user',method:'put',data
+})
+
+// 查询所有权限（添加职位时用） /menu/list
+export const reqAllMenu = ()=>requests({
+    url:'/menu/list',method:'get'
+})
+
+// 添加职位  /auth/add  
+export const reqAddAuth = (data)=>requests({
+    url:'/auth/add',method:'post',data
+})
+
+// 删除职位  /auth/delete/{authId}
+export const reqDeleteAuth = (authId)=>requests({
+    url:`/auth/delete/${authId}`,method:'delete'
+})
+
+// 修改职位  /auth/update
+export const reqUpdateAuth = (data)=>requests({
+    url:"/auth/update",method:'put',data
 })

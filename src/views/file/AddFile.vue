@@ -26,9 +26,9 @@ export default {
       for (let i = 0; i < files.length; i++) {
         formData.append("uploadFiles", files[i]);
       }
-
+      await this.$store.dispatch('addFile',formData)
       // 使用Axios或其他HTTP客户端发送POST请求
-      axios
+     /*  axios
         .post("http://localhost:8080/file/upload/common", formData)
         .then((response) => {
           // 处理上传成功的响应
@@ -41,7 +41,7 @@ export default {
         })
         .catch((error) => {
           // 处理上传失败的错误
-        });
+        }); */
     },
   },
 };

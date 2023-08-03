@@ -1,4 +1,4 @@
-import { reqQueryFile, reqDeleteFile,reqDownLoad } from "../api/index";
+import { reqQueryFile, reqDeleteFile,reqDownLoad ,reqAddFile} from "../api/index";
 const state = {
     fileData: {}
 }
@@ -31,11 +31,10 @@ const actions = {
     // 下在文档
     async downLoad({commit},fileId){
         let result = await reqDownLoad(fileId);
-        return result
-        
-    }
+        return result    
+    },
 
-    /*     // 上传文件
+        // 上传文件
         async addFile({commit},formData){
             let result = await reqAddFile(formData);
             if(result.flag == true){
@@ -43,7 +42,7 @@ const actions = {
             }else{
                 return result.msg
             }
-        } */
+        }
 
 
 }

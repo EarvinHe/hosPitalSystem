@@ -122,6 +122,7 @@ const actions = {
     // 诊断结果
     async resultPatient({commit},{id,diagnosisResult}){
         let result = await reqQueryPatientresult(id,diagnosisResult)
+        console.log(result)
         if(result.flag == true){
             return 'ok'
         }else{
@@ -132,6 +133,7 @@ const actions = {
     // 下载患者诊断书
     async downLoadPatient({commit},{patientId,deptId}){
         let result = await reqDownLoadPatient(patientId,deptId)
+        return result
     },
 
     // 查看已经有计科诊断结束

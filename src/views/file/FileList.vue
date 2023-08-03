@@ -167,7 +167,6 @@ export default {
     // 下载共享文档
     async toDownload(row){
       const fileId = row.fileId
-      // axios.get('http://localhost:8080/file/download/common',row.fileId)
       const thisImage =  await  this.$store.dispatch('downLoad',fileId)
       // 以blob的形式打印出来
       // console.log(thisImage)

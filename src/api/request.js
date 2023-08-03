@@ -6,7 +6,7 @@ import axios from "axios";
 const requests = axios.create({
     // 配置对象
     // 基础路径，发送请求的时候，路径当中会出现
-    baseURL:"/",//后面跟本地对应的servlet
+    baseURL:"http://localhost:8080",//后面跟本地对应的servlet
     // 设置携带cookie
     withCredentials:true,
     // 代表请求超时时s间5s

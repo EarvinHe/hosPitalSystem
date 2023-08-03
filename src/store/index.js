@@ -12,6 +12,7 @@ import log from '@/store/log'
 import duty from '@/store/duty'
 import notice from '@/store/notice'
 import file from "./file";
+import auth from '@/store/auth'
 // 对外暴露一个Store实例：
 export default new Vuex.Store({
     // 实现Vue仓库模块式开发存储器
@@ -23,7 +24,8 @@ export default new Vuex.Store({
         log,
         duty,
         notice,
-        file
+        file,
+        auth
     }
 
 })

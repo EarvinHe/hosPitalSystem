@@ -25,7 +25,7 @@ export default {
 
 <style >
   html,body,#app{
-    height: 100%;
+    height: 100vh;
     width: 100%;
     /* overflow: hidden; 或者 overflow: scroll; */
     /* position: relative; */
