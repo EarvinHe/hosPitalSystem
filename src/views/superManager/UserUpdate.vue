@@ -13,13 +13,20 @@
           <el-input v-model="UserUpdateForm.userId"></el-input>
         </el-form-item>
 
+        <el-form-item label="用户名">
+          <el-input v-model="UserUpdateForm.userName"></el-input>
+        </el-form-item>
+
+        <el-form-item label="用户头像">
+          <input type="file"  name="uploadFile"
+            multiple
+            @change="handlerClick">
+        </el-form-item>
+
         <el-form-item label="姓名">
           <el-input v-model="UserUpdateForm.realName"></el-input>
         </el-form-item>
 
-        <el-form-item label="用户名">
-          <el-input v-model="UserUpdateForm.userName"></el-input>
-        </el-form-item>
 
         <el-form-item label="性别">
           <el-radio-group v-model="UserUpdateForm.sex">
@@ -75,6 +82,7 @@
 </template>
   
   <script>
+  let _fileObj;
 import { mapState } from "vuex";
 export default {
   name: "",
@@ -92,6 +100,7 @@ export default {
         email: "",
         image: "",
       },
+      files: [],
       dialogFormVisible: false,
       // isModal:false
 
@@ -123,6 +132,19 @@ export default {
       }
     },
 
+    // 上传用户头像，绑定点击事件，获取文件
+    async handlerClick(e) {
+      console.log(e.target.files)
+      let uploadFile = e.target.files[0];
+      // 将得到的文件列表转换成真正的数组
+      // this.files = Array.from(uploadFile)
+      _fileObj = uploadFile;
+      let formData = new FormData();
+      formData.append("uploadFile", _fileObj);
+     const result = await this.$store.dispatch('userImg',formData)
+      this.UserUpdateForm.image = result;
+    },
+
     //   修改用户数据
     async updateUser() {
       try {
@@ -140,6 +162,7 @@ export default {
           auths: authArray,
           birth: this.UserUpdateForm.patientTelphone,
           mobile: this.UserUpdateForm.patientAddress,
+          image:this.UserUpdateForm.image
         };
         await this.$store.dispatch("updateUserByUserId", data);
         this.$message({

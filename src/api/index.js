@@ -10,14 +10,24 @@ export const loginApi = (data) => requests({
     }
 })
 
-// // 获取验证码请求（暂时作废）
-// export const getChangeCaptcha = () => requests({ url: '/user/code',
-//  method: 'get' });
+// 获取验证码请求（暂时作废）
+export const getChangeCaptcha = () => requests({ url: '/user/code',
+ method: 'get' });
 
 // 用户注册 url：/user/register 参数：
 export const reqUserRegist = (data) => requests({
     url: '/user/register', data, method: 'post'
 })
+
+// 注册时上传头像（修改用户头像）
+export const reqAddImg = (data)=>requests({
+    url:'http://localhost:8080/file/upload/image',method:'post',data
+})
+
+// 加载用户头像(用不着了,直接在头像的img处将路径拼接了)
+/* export const reqLoadUserImg = (name)=>requests({
+    url:'/file/download/image',method:'get',params:{name:name}
+}) */
 
 // 查询所有科室（分诊管理，科室管理）
 export const reqAllDepts = (data) => requests({
@@ -100,9 +110,9 @@ export const reqChangeStatus = (status, drugsId) => requests({
     // 参数需要换下位置
 })
 
-// 完成审核并上传结果   /drugs/check
+// 完成审核并上传结果   /drugs/submit/check
 export const reqSubmitCheck = (data) => requests({
-    url: '/drugs/check', method: 'put', data
+    url: '/drugs/submit/check', method: 'put', data
 })
 
 // 提交审核  url：/drugs/check/2

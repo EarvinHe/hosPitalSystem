@@ -1,59 +1,80 @@
-  <template>
+<template>
   <el-drawer
     size="25%"
-    style="border-radius: 15px 0px 0px 15px;"
+    style="border-radius: 15px 0px 0px 15px"
     id="drawer"
     title="超级管理员"
     :visible.sync="drawer"
     :with-header="true"
   >
-  <el-divider></el-divider>
-  <span class="el-icon-user" @click="toUsers">用户管理</span>
+    <div>
+      <img class="avatar" :src="userImage" alt="">
+    </div>
 
-  <span class="el-icon-plus" @click="toAddUser">添加用户</span>
-  
-  <span class="el-icon-refresh" @click="toAuth">职位/权限</span>
+    <el-divider></el-divider>
+    <span class="el-icon-user" @click="toUsers">用户管理</span>
 
+    <span class="el-icon-plus" @click="toAddUser">添加用户</span>
 
+    <span class="el-icon-refresh" @click="toAuth">职位/权限</span>
   </el-drawer>
 </template>
+  
   <script>
+  import { getUserData } from '@/util/token';
 export default {
   data() {
     return {
       drawer: false,
+      userImage:''
     };
   },
+  computed: {
+    
+  },
   methods: {
-    openDrawer() {
+   async openDrawer() {
       this.drawer = true;
+      this.userImg()
     },
-    toUsers(){
-      this.$router.push('/users')
+    // 加载头像图片
+     userImg(){
+      const name = getUserData().image    
+      this.userImage = 'http://localhost:8080/file/download/image?name=' +name 
     },
-    toAddUser(){
-      this.$router.push('/regist')
+    toUsers() {
+      this.$router.push("/users");
     },
-    toAuth(){
-      this.$router.push('/auth')
-    }
+    toAddUser() {
+      this.$router.push("/regist");
+    },
+    toAuth() {
+      this.$router.push("/auth");
+    },
   },
 };
 </script>
 
   <style scoped>
+#drawer ::v-deep .el-drawer__header {
+  width: 150px;
+}
+#drawer ::v-deep .el-drawer__close-btn {
+  display: none;
+}
 /* 使用v-deep来穿透原有的样式，使之能够选中深层次控制圆角的元素，进而给抽屉添加圆角 */
 #drawer ::v-deep .el-drawer__open .el-drawer.rtl {
   border-radius: 15px 0px 0px 15px;
 }
-#drawer ::v-deep .el-drawer__header{
+#drawer ::v-deep .el-drawer__header {
   color: rgb(0, 0, 0);
+  position: relative;
 }
-.el-divider--horizontal{
+.el-divider--horizontal {
   width: 90%;
-  margin:  12px;
+  margin: 12px;
 }
-span{
+span {
   display: flex;
   align-items: center;
   width: 340px;
@@ -61,29 +82,40 @@ span{
   cursor: pointer;
   margin: 7px 20px;
   color: rgb(92, 92, 92);
-  transition: background-color 0.4s ;
+  transition: background-color 0.4s;
   /* animation: fadeToGray forwards 1s; */
 }
 
-span:hover{
+span:hover {
   display: flex;
   align-items: center;
   width: 340px;
   height: 35px;
   border-radius: 5px;
   background-color: rgb(230, 230, 230);
- 
 }
-.el-icon-user:before{
+.el-icon-user:before {
   margin-right: 15px;
   margin-left: 5px;
 }
-.el-icon-refresh:before{
+.el-icon-refresh:before {
   margin-right: 15px;
   margin-left: 5px;
 }
-.el-icon-plus:before{
+.el-icon-plus:before {
   margin-right: 15px;
   margin-left: 5px;
 }
+
+.avatar {
+  border-radius: 50%;
+  border: 1px solid rgb(158, 157, 157);
+  position: absolute;
+  top: 10px;
+  left: 190px;
+  padding: 0;
+  width: 50px;
+  height: 50px;
+}
+
 </style>

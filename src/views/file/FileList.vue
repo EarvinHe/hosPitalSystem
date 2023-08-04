@@ -205,7 +205,7 @@ export default {
   height: 100%;
   flex-direction: column;
   align-items: center;
-  position: fixed;
+  position: relative;
   .topOption {
     /* display: flex; */
     width: 660px;

@@ -4,8 +4,6 @@
     <!-- 未登录 -->
     <ul class="loginRegist" v-if="!userName">
       <router-link to="/login">你好，请登录</router-link>
-      <li class="spacer"></li>
-      <router-link to="/regist">注册</router-link>
     </ul>
     <!-- 登录之后 -->
     <ul class="loginRegist" v-else="userName">

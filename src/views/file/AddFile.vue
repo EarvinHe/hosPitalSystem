@@ -12,7 +12,6 @@
 </template>
   
   <script>
-import axios from "axios";
 export default {
   name: "addFile",
   data() {
@@ -27,6 +26,12 @@ export default {
         formData.append("uploadFiles", files[i]);
       }
       await this.$store.dispatch('addFile',formData)
+      this.$message({
+        message:'文件上传成功',
+        type: "success",
+          showClose: true,
+      })
+      this.$router.push('/fileList')
       // 使用Axios或其他HTTP客户端发送POST请求
      /*  axios
         .post("http://localhost:8080/file/upload/common", formData)
