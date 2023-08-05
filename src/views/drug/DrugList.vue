@@ -48,7 +48,9 @@
             >
           </template>
         </el-table-column>
-        <el-table-column align="center" prop="drugsId" label="编号" width="50">
+        <el-table-column type="index" :index="indexMethod"  width="60" align="center" label="序列">
+        </el-table-column>
+        <el-table-column v-if="false" align="center" prop="drugsId" label="编号" width="50">
         </el-table-column>
         <el-table-column
           align="center"
@@ -157,7 +159,7 @@
 </template>
 
 <script>
-import DrugDialog from "./DrugDialog.vue"; 
+import DrugDialog from "./DrugDialog.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "drugList",
@@ -171,7 +173,7 @@ export default {
     };
   },
   components: {
-    DrugDialog
+    DrugDialog,
   },
   computed: {
     ...mapGetters(["drugData"]),
@@ -183,9 +185,13 @@ export default {
     this.getData();
   },
   methods: {
+     // 自定义索引
+     indexMethod(index) {
+      return (this.page-1)*this.pageSize + (index + 1);
+    },
     // 在此查看药品具体信息
     handleClick(row) {
-      this.$refs.DrugDialog.openDialog(row)
+      this.$refs.DrugDialog.openDialog(row);
     },
     dialogFormVisible() {},
 
@@ -224,21 +230,23 @@ export default {
     async handleDelete(index, row) {
       //参数为每页第几(index+1)条数据，和这条数据的具体内容
       try {
-        await this.$store.dispatch("deleteOneDrug", row.drugsId);
-        this.$message({
-          message: "删除成功",
-          type: "success",
-          showClose: true,
-        });
-        if ((this.drugData.total - 1) % this.pageSize == 0) {
-          const params = {
-            page: (this.drugData.total - 1) / this.pageSize,
-            pageSize: this.pageSize,
-            drugsName: this.drugsName,
-          };
-          await this.$store.dispatch("showAllDrugs", params);
-        } else {
-          this.getData();
+        const res = await this.$store.dispatch("deleteOneDrug", row.drugsId);
+        if (res == "ok") {
+          if ((this.drugData.total - 1) % this.pageSize == 0) {
+            const params = {
+              page: (this.drugData.total - 1) / this.pageSize,
+              pageSize: this.pageSize,
+              drugsName: this.drugsName,
+            };
+            await this.$store.dispatch("showAllDrugs", params);
+          } else {
+            this.getData();
+          }
+          this.$message({
+            message: "删除成功",
+            type: "success",
+            showClose: true,
+          });
         }
       } catch (error) {}
     },
@@ -255,12 +263,14 @@ export default {
         const params = {
           drugsId: drugsId,
         };
-        await this.$store.dispatch("checkDrug", params);
-        this.$message({
-          message: "提交审核成功",
-          type: "success",
-          showClose: true,
-        });
+        const res = await this.$store.dispatch("checkDrug", params);
+        if (res == "ok") {
+          this.$message({
+            message: "提交审核成功",
+            type: "success",
+            showClose: true,
+          });
+        }
         this.getData();
       } catch (error) {}
     },
@@ -276,7 +286,17 @@ export default {
         const status = row.saleStatus;
         const drugsId = row.drugsId;
 
-        await this.$store.dispatch("changeSaleStatus", { status, drugsId });
+        const res = await this.$store.dispatch("changeSaleStatus", {
+          status,
+          drugsId,
+        });
+        if (res == "ok") {
+          this.$message({
+            message: "修改销售状态成功",
+            type: "success",
+            showClose: true,
+          });
+        }
         this.$router.replace({
           path: "/drugList" + "/",
           query: { status, drugsId },
@@ -309,7 +329,7 @@ export default {
     position: absolute;
     /* display: flex; */
     top: 175px;
-    width: 1001px;
+    width: 1011px;
     left: 50%;
     transform: translate(-50%);
   }

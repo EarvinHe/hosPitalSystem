@@ -60,7 +60,14 @@ export default {
           checkContent: this.inCheckForm.checkContent,
           version: this.inCheckForm.version,
         };
-       await this.$store.dispatch("submitCheck", data);
+      const res = await this.$store.dispatch("submitCheck", data);
+       if (res == "ok") {
+          this.$message({
+            message: "修改成功",
+            type: "success",
+            showClose: true,
+          });
+        }
       this.$router.push('/CheckDrug')  
       } catch (error) {}
     },

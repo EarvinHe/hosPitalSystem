@@ -73,12 +73,14 @@ export default {
     async addPatient() {
       try {
         const data = this.addPatientForm;
-        await this.$store.dispatch("addPatient", data);
-        this.$message({
-          message: "添加成功",
-          type: "success",
-          showClose: true,
-        });
+       const res = await this.$store.dispatch("addPatient", data);
+        if (res == "ok") {
+          this.$message({
+            message: "添加成功",
+            type: "success",
+            showClose: true,
+          });
+        }
         // 跳转患者管理
 
         this.$router.push("/patientList");

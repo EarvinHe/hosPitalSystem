@@ -65,18 +65,31 @@ export default {
   },
   methods: {
     showData() {
-      console.log(this.$route.query)
+      console.log(this.$route.query);
       this.resultForm = this.queryData;
     },
 
+    // 提交诊断
     async submitResult() {
       try {
-        // this.
         const id = this.resultForm.id;
         const diagnosisResult = this.resultForm;
-        await this.$store.dispatch("resultPatient", { id, diagnosisResult });
-        // this.$$router.push('/triageDetail')
-        this.$router.push({name:'triageDetail',params:{deptId:this.resultForm.deptId},query:{deptName:this.resultForm.deptName}})
+        const res = await this.$store.dispatch("resultPatient", {
+          id,
+          diagnosisResult,
+        });
+        if (res == "ok") {
+          this.$message({
+            message: "叫号成功",
+            type: "success",
+            showClose: true,
+          });
+        }
+        this.$router.push({
+          name: "triageDetail",
+          params: { deptId: this.resultForm.deptId },
+          query: { deptName: this.resultForm.deptName },
+        });
       } catch (error) {}
     },
   },

@@ -28,7 +28,11 @@
         border
         style="width: 100%; color: black"
       >
+      <el-table-column type="index" :index="indexMethod"  width="60" align="center" label="序列">
+        </el-table-column>
+
         <el-table-column
+        v-if="false"
           align="center"
           prop="patientId"
           label="编号"
@@ -93,7 +97,10 @@
               >挂号</el-button
             >
 
-            <el-button size="mini" type="primary" @click="downloadResult(scope.row)"
+            <el-button
+              size="mini"
+              type="primary"
+              @click="downloadResult(scope.row)"
               >下载诊断</el-button
             >
           </template>
@@ -119,7 +126,7 @@
   
   <script>
 import updateDialog from "./updateDialog.vue";
-import OverCountDialog from '@/views/patient/OverCountDialog'
+import OverCountDialog from "@/views/patient/OverCountDialog";
 import { mapGetters } from "vuex";
 export default {
   name: "PatienList",
@@ -132,7 +139,7 @@ export default {
   },
   components: {
     updateDialog,
-    OverCountDialog
+    OverCountDialog,
   },
   computed: {
     ...mapGetters(["patientData"]),
@@ -145,6 +152,10 @@ export default {
     this.getPatientData();
   },
   methods: {
+     // 自定义索引
+     indexMethod(index) {
+      return (this.page-1)*this.pageSize + (index + 1);
+    },
     // 将代表性别的数字转换程文字
     getGenderText(patientSex) {
       return patientSex === 0 ? "女" : "男";
@@ -183,16 +194,23 @@ export default {
     async handleDelete(index, row) {
       try {
         const ids = row.patientId;
-        await this.$store.dispatch("deletePatientById", ids);
-        if ((this.patientData.total - 1) % this.pageSize == 0) {
-          const params = {
-            page: (this.patientData.total - 1) / this.pageSize,
-            pageSize: this.pageSize,
-            patientName: this.patientName,
-          };
-          await this.$store.dispatch("queryAllPatients", params);
-        }else{
-          this.getPatientData()
+       const res =  await this.$store.dispatch("deletePatientById", ids);
+        if (res == "ok") {
+          if ((this.patientData.total - 1) % this.pageSize == 0) {
+            const params = {
+              page: (this.patientData.total - 1) / this.pageSize,
+              pageSize: this.pageSize,
+              patientName: this.patientName,
+            };
+            await this.$store.dispatch("queryAllPatients", params);
+          } else {
+            this.getPatientData();
+          }
+          this.$message({
+            message: "删除成功",
+            type: "success",
+            showClose: true,
+          });
         }
       } catch (error) {}
     },
@@ -207,7 +225,6 @@ export default {
       this.$refs.OverCountDialog.openDownLoadDialog(row);
     },
 
-
     // 去挂号页面
     toPatientRegist(row) {
       const data = {
@@ -219,7 +236,7 @@ export default {
     },
 
     // 去下载诊断结果
-  /*   downloadResult(row) {
+    /*   downloadResult(row) {
       this.$router.push({name:'downLoadPatient',query:{patientId:row.patientId,patientName:row.patientName}})
     }, */
   },

@@ -19,34 +19,23 @@ export default {
   },
   methods: {
     async uploadFile() {
-      const files = this.$refs.fileInput.files;
-      const formData = new FormData();
-      // 将选择的文件添加到FormData对象中
-      for (let i = 0; i < files.length; i++) {
-        formData.append("uploadFiles", files[i]);
-      }
-      await this.$store.dispatch('addFile',formData)
-      this.$message({
-        message:'文件上传成功',
-        type: "success",
-          showClose: true,
-      })
-      this.$router.push('/fileList')
-      // 使用Axios或其他HTTP客户端发送POST请求
-     /*  axios
-        .post("http://localhost:8080/file/upload/common", formData)
-        .then((response) => {
-          // 处理上传成功的响应
+      try {
+        const files = this.$refs.fileInput.files;
+        const formData = new FormData();
+        // 将选择的文件添加到FormData对象中
+        for (let i = 0; i < files.length; i++) {
+          formData.append("uploadFiles", files[i]);
+        }
+        const res = await this.$store.dispatch("addFile", formData);
+        if (res == "ok") {
           this.$message({
-              message: "上传成功",
-              type: "success",
-              showClose: true,
-            });
-          this.$router.push('/fileList')
-        })
-        .catch((error) => {
-          // 处理上传失败的错误
-        }); */
+            message: "文件上传成功",
+            type: "success",
+            showClose: true,
+          });
+        }
+        this.$router.push("/fileList");
+      } catch (error) {}
     },
   },
 };
@@ -82,7 +71,7 @@ export default {
       margin: 10px 5px 20px 5px;
     }
   }
-  .addForm{
+  .addForm {
     display: flex;
     height: 35px;
     align-items: center;
@@ -91,43 +80,43 @@ export default {
     border-radius: 5px;
   }
   .inputData::file-selector-button {
-      /* 自定义样式 */
-      margin-top: 2px;
-      height: 32px;
-      width: 80px;
-      border:#40a0ffe6 ;
-      border-radius: 5px;
-      color: #fff;
-      background-color: #40a0ffc0;
-      cursor: pointer;
-    }
-    // 用伪类来给按钮加一个点击改变颜色
-    .inputData::file-selector-button:active{
-      background-color: #409EFF;
-    }
-    .inputData{
-      display: flex;
-      width: 400px;
-      align-items: center;
-      padding: 2px 5px;
-      height: 35px;
-      border: 1px solid #b4bccc;
-      border-radius: 5px 0px 0px 5px ;
-      transition: border-color 0.3s ease;
-    }
-    .inputData:focus{
-      border: 1px solid #409EFF;
-    }
-    .loadButton{
-      width: 80px;
-      height: 40.6px;
-      background-color: #67C23A;
-      border:none;
-      cursor: pointer;
-      border-radius: 0px 5px 5px 0px ;
-    }
-    .loadButton:active{
-      background-color: #5eb533;
-    }
+    /* 自定义样式 */
+    margin-top: 2px;
+    height: 32px;
+    width: 80px;
+    border: #40a0ffe6;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #40a0ffc0;
+    cursor: pointer;
+  }
+  // 用伪类来给按钮加一个点击改变颜色
+  .inputData::file-selector-button:active {
+    background-color: #409eff;
+  }
+  .inputData {
+    display: flex;
+    width: 400px;
+    align-items: center;
+    padding: 2px 5px;
+    height: 35px;
+    border: 1px solid #b4bccc;
+    border-radius: 5px 0px 0px 5px;
+    transition: border-color 0.3s ease;
+  }
+  .inputData:focus {
+    border: 1px solid #409eff;
+  }
+  .loadButton {
+    width: 80px;
+    height: 40.6px;
+    background-color: #67c23a;
+    border: none;
+    cursor: pointer;
+    border-radius: 0px 5px 5px 0px;
+  }
+  .loadButton:active {
+    background-color: #5eb533;
+  }
 }
 </style>

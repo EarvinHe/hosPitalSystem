@@ -3,9 +3,14 @@
     <div class="tableList">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column :label="'科室患者信息   ' + deptName" align="center">
+         
+          <el-table-column type="index" :index="indexMethod"  width="60" align="center" label="序列">
+        </el-table-column>
+
           <el-table-column
+          v-if="false"
             prop="patientId"
-            label="序号"
+            label="编号"
             width="120"
             align="center"
           >
@@ -117,6 +122,10 @@ export default {
   },
 
   methods: {
+     // 自定义索引
+     indexMethod(index) {
+      return (this.page-1)*this.pageSize + (index + 1);
+    },
     // 状态栏转义
     getSatusText(patientRegisterStatus) {
       if (patientRegisterStatus == 1) {
@@ -160,12 +169,15 @@ export default {
       try {
         const status = 1;
         const id = row.id;
-        await this.$store.dispatch("updatePatientStatus", { status, id });
-        this.$message({
+        const res = await this.$store.dispatch("updatePatientStatus", { status, id });
+        if(res == 'ok'){
+          this.$message({
           message: "叫号成功",
           type: "success",
           showClose: true,
         });
+        }
+        
         this.queryPatientByDeptId();
       } catch (error) {}
     },

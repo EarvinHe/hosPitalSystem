@@ -42,24 +42,24 @@ export default {
       try {
         const deptId = this.$route.params.deptId;
         await this.$store.dispatch("showDeptById", deptId);
-        const oneData = JSON.parse(JSON.stringify(this.singleData))
+        const oneData = JSON.parse(JSON.stringify(this.singleData));
         this.updateDeptForm = oneData;
       } catch (error) {}
     },
 
     async updateDept() {
       try {
-        await this.$store.dispatch("updateDept", this.updateDeptForm);
-        this.$message({
-              message: "修改成功",
-              type: "success",
-              showClose: true,
-            });
-            // 跳转科室管理
-            this.$router.push("/dept");
-      } catch (error) {
-        alert(error.msg)
-      }
+        const res = await this.$store.dispatch("updateDept", this.updateDeptForm);
+        if (res == "ok") {
+          this.$message({
+            message: "修改成功",
+            type: "success",
+            showClose: true,
+          });
+        }
+        // 跳转科室管理
+        this.$router.push("/dept");
+      } catch (error) {}
     },
   },
 };

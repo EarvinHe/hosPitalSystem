@@ -26,7 +26,8 @@ export default {
   data() {
     return {
       drawer: false,
-      userImage:''
+      // 使用require函数将图片路径包装起来，这样Vue-loader就能正确地处理图片路径。
+      userImage:require('@/assets/头像.png')
     };
   },
   computed: {
@@ -40,8 +41,13 @@ export default {
     // 加载头像图片
      userImg(){
       const name = getUserData().image    
-      this.userImage = 'http://localhost:8080/file/download/image?name=' +name 
+      if(name){
+        this.userImage = 'http://localhost:8080/file/download/image?name=' +name 
+      }else{
+        this.userImage = this.userImage
+      }  
     },
+
     toUsers() {
       this.$router.push("/users");
     },

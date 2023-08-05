@@ -65,8 +65,9 @@ export default {
             type: "success",
             showClose: true,
           });
-          this.$router.push("/noticeList");
         }
+          this.$router.push("/noticeList");
+        
       } catch (error) {}
     },
   },

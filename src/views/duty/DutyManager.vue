@@ -61,7 +61,7 @@
 </template>
   
   <script>
-import { mapGetters, mapState } from "vuex";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -126,20 +126,24 @@ export default {
     // 删除这条数据
     async deleteThisRow(row) {
       try {
-        await this.$store.dispatch("deleteWork", row.workId);
-        if((this.dutyWorkData.total-1)%this.pageSize == 0){
-          await this.$store.dispatch("pageWorkByDept", {
-          deptId: this.deptId,
-          page: this.page-1,
-          pageSize: this.pageSize,
-          realName: this.realName,
-        });
-        this.tableData = this.records;
-        this.$message({
-          message: "删除成功",
-          type: "success",
-          showClose: true,
-        });0
+        const res = await this.$store.dispatch("deleteWork", row.workId);
+        if (res == "ok") {
+          if ((this.dutyWorkData.total - 1) % this.pageSize == 0) {
+            await this.$store.dispatch("pageWorkByDept", {
+              deptId: this.deptId,
+              page: this.page - 1,
+              pageSize: this.pageSize,
+              realName: this.realName,
+            });
+            this.tableData = this.records;
+          }else{
+            this.pageDutyWork()
+          }
+          this.$message({
+            message: "删除成功",
+            type: "success",
+            showClose: true,
+          });
         }
       } catch (error) {}
     },

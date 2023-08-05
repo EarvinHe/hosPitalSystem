@@ -29,12 +29,15 @@
     methods: {
       async addNotice() {
         try {
-          await this.$store.dispatch("addNotice", this.addNoticeForm);
-          this.$message({
+          const res = await this.$store.dispatch("addNotice", this.addNoticeForm);
+          if(res == 'ok'){
+            this.$message({
                 message: "添加成功",
                 type: "success",
                 showClose: true,
               });
+          }
+         
               // 跳转科室管理
               this.$router.push("/NoticeList");
         } catch (error) {

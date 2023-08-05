@@ -108,12 +108,14 @@ export default {
     async addDrugs() {
       try {
         const data = this.addDrugForm;
-        await this.$store.dispatch("addDrugs", data);
-        this.$message({
-          message: "添加成功",
-          type: "success",
-          showClose: true,
-        });
+        const res =  await this.$store.dispatch("addDrugs", data);
+        if (res == "ok") {
+          this.$message({
+            message: "添加成功",
+            type: "success",
+            showClose: true,
+          });
+        }
         // 跳转药品管理
         
         this.$router.push("/drugList");

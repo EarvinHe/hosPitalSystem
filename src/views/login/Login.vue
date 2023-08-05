@@ -41,7 +41,12 @@
               v-model="loginForm.code"
               placeholder="输入验证码"
             ></el-input>
-            <img @click="changeCaptcha" width="80px" height="40px" :src="captchaUrl" />
+            <img
+              @click="changeCaptcha"
+              width="80px"
+              height="40px"
+              :src="captchaUrl"
+            />
           </div>
         </el-form-item>
 
@@ -54,9 +59,6 @@
           >
         </el-form-item>
       </el-form>
-      <a style="text-decoration: none; font-size: 14px" @click="toRegist"
-        >免费注册</a
-      >
     </div>
   </div>
 </template>
@@ -107,9 +109,22 @@ export default {
             const data = {
               userName: this.loginForm.userName,
               password: this.loginForm.password,
-              // code:this.loginForm.code
+              code:this.loginForm.code
             };
-            await this.$store.dispatch("userLogin", data);
+            const res = await this.$store.dispatch("userLogin", data);
+            if ((res == "ok")) {
+              this.$message({
+                message: "登录成功",
+                type: "success",
+                showClose: true,
+              });
+            }else{
+              this.$message({
+                message: res,
+                type: "error",
+                showClose: true,
+              });
+            }
             this.$router.push("/");
           } catch (error) {}
         }

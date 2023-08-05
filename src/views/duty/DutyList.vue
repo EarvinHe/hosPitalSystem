@@ -46,6 +46,7 @@ export default {
       await this.$store.dispatch("DutyCount");
       const allDutys = JSON.parse(JSON.stringify(this.dutyData));
       this.allDutys = allDutys;
+
     },
 
     //    去管理值班分页查询页面

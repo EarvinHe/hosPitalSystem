@@ -56,24 +56,30 @@ export default {
   },
   methods: {
     // 拿到患者数据和科室数据
-   async getData() {
-       this.PatientRegistForm = this.$route.query.data;
-      await this.$store.dispatch("selectAllDepts");
-      const oneData = JSON.parse(JSON.stringify(this.deptInfo));
-      
+    async getData() {
+      try {
+        this.PatientRegistForm = this.$route.query.data;
+        await this.$store.dispatch("selectAllDepts");
+        // const oneData = JSON.parse(JSON.stringify(this.deptInfo));
+      } catch (error) {}
     },
 
     // 完成挂号
     async doneRegist() {
       try {
-        await this.$store.dispatch("patientRegister", this.PatientRegistForm);
-        this.$message({
-              message: "挂号成功",
-              type: "success",
-              showClose: true,
-            });
+        const res = await this.$store.dispatch(
+          "patientRegister",
+          this.PatientRegistForm
+        );
+        console.log(res)
+        if (res == "ok") {
+          this.$message({
+            message: "挂号成功",
+            type: "success",
+            showClose: true,
+          });
+        }
         this.$router.push("/patientList");
-        
       } catch (error) {}
     },
   },
