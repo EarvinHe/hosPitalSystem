@@ -40,6 +40,7 @@ const actions = {
         // 分页查询值班表(首页)
         async pageWork({commit},params){
             let result = await reqDutyWork(params);
+            // console.log(result)
             if(result.flag == true){
                 commit('DUTYWORKDATA',result.data)
             }else{

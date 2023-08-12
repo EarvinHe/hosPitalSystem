@@ -9,7 +9,7 @@
     >
     <!-- 上述自定义了一个触发事件，当dialog关闭时，触发方法，用以再修改完成后刷新父页面数据 -->
       <el-form label-width="100px" size="small">
-        <el-form-item label="用户Id">
+        <el-form-item v-if="false" label="用户Id">
           <el-input v-model="UserUpdateForm.userId"></el-input>
         </el-form-item>
 

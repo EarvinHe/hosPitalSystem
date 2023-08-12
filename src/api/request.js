@@ -36,23 +36,43 @@ export const del = (url) => {
 requests.interceptors.request.use(config => {
   // config:配置对象，对象里有headers请求头
   // 将token存放
-  const token = localStorage.getItem('HOSPITALTOKEN')//或者从vuex中拿也行
-  config.headers.TOKEN = token;
+  // console.log(getToken())
+  if(getToken()){
+    // console.log('存在')
+    const token = localStorage.getItem('HOSPITALTOKEN')//或者从vuex中拿也行
+    config.headers.TOKEN = token;
+  }else{
+    // console.log('token不存在')
+    // window.location.replace('/login')
+  }
+
   return config
 }), (error) => {
   return Promise.reject(error)
 }
 
 import { showMessage } from "@/util/message";
+import { getToken, removeToken,removeUserData,removeUsername } from "@/util/token";
+import store from "@/store";
 // 封装响应拦截器
 requests.interceptors.response.use(res => {
   // 成功的回调函数：服务器响应数据回来以后，响应拦截器可以检测到，可以做一些事情
   // console.log(res)
-  if (res.data.flag == false) {
-   if (res.data.msg == 'NOAUTHORITY') {
-      showMessage('没有权限')
-    } else if(res.data.msg == 'NOTLOGIN'){ 
-      showMessage('未登录')
+  if (res.data.flag === false) {
+    // console.log(res.data.msg)
+    if(res.data.msg === 'NOTLOGIN' ){ 
+      // console.log(res.data.msg)
+      showMessage('未登录或登录已过期，请重新登录')
+
+
+      // 用于token过期的处理
+      removeToken()
+      removeUsername()
+      removeUserData()
+      //重定向登录页面，并且将浏览器保存的用户数据和页面展示出来的用户信息全部清除
+      window.location.replace('/#/login')
+      store.commit('USERLOGOUT')
+      return
     }
   }
   return res.data;

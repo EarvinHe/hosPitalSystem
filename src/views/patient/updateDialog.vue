@@ -22,7 +22,7 @@
           </el-radio-group>
         </el-form-item>
 
-        <el-form-item label="患者Id">
+        <el-form-item label="患者Id" v-if="false">
           <el-input v-model="PatientUpdateForm.patientId"></el-input>
         </el-form-item>
 

@@ -29,6 +29,9 @@
             width="120"
             align="center"
           >
+          <template slot-scope="scope">
+              {{ getGenderText(scope.row.patientSex) }}
+            </template>
           </el-table-column>
           <el-table-column
             prop="patientBirthday"
@@ -125,6 +128,10 @@ export default {
      // 自定义索引
      indexMethod(index) {
       return (this.page-1)*this.pageSize + (index + 1);
+    },
+    // 将代表性别的数字转换程文字
+    getGenderText(sex) {
+      return sex === 0 ? "女" : "男";
     },
     // 状态栏转义
     getSatusText(patientRegisterStatus) {

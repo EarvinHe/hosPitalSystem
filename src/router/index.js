@@ -36,6 +36,7 @@ import Users from '@/views/superManager/Users'
 import UserList from '@/views/superManager/UserList'
 import Auth from '@/views/superManager/Auth'
 import { showMessage } from "@/util/message";
+import { getToken } from "@/util/token";
 Vue.use(VueRouter);
 
 const routes = [
@@ -292,7 +293,7 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
 
 //路由守卫
 router.beforeEach((to, from, next) => {
-    const token = store.state.user.userToken
+    const token = getToken()
     // 管理系统常见的两个金典逻辑：
     // 1.如果用户访问登录页面，但token已经存在，跳转到首页
     if (token) {
@@ -315,7 +316,7 @@ router.beforeEach((to, from, next) => {
             next();
         } else {
             // 用户未登录，访问的是其他页面，重定向到登录页,并弹出错误信息
-            showMessage('请先登录再试')
+            // showMessage('请先登录再试')
             next("/login");
         }
         // next()
