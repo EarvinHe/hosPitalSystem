@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <header>
     <el-menu
       class="el-menu-demo"
       mode="horizontal"
@@ -39,7 +39,7 @@
         <el-menu-item index="7-3" @click="toManagerNotice">通知管理</el-menu-item>
       </el-submenu>
     </el-menu>
-  </div>
+  </header>
 </template>
 
 <script>
@@ -112,7 +112,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.header {
+header {
   // display: flex;
   height: 60px;
   width: 100%;

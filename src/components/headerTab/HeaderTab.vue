@@ -61,6 +61,14 @@ export default {
 
 <style lang="less" scoped>
 .headerTab {
+
+  // 响应式布局
+  @media screen and(max-width: 600px) {
+    span,li,ul{
+      display: none;
+    }
+  }
+
   display: flex;
   height: 35px;
   background: #939393;
