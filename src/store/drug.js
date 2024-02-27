@@ -28,6 +28,8 @@ const actions = {
         let result = await reqAllDrugs(params);
         if(result.flag == true){
             commit('SHOWALLDRUGS',result.data)
+        }else{
+            return result.msg
         }
     },
 
@@ -44,7 +46,11 @@ const actions = {
     // 修改药品
     async updateDrugs({commit},data){
         let result = await reqUpdateDrug(data);
-
+        if(result.flag == true){
+            return 'ok'
+        }else{
+            return result.msg
+        }
     },
 
     // 根据id查询
@@ -70,6 +76,11 @@ const actions = {
     // 提交审核药品
     async checkDrug({commit},data){
         let result = await reqCheckDrug(data);
+        if(result.flag == true){
+            return 'ok'
+        }else{
+            return result.msg
+        }
     },
 
     // 修改药品状态

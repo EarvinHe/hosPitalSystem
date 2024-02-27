@@ -25,11 +25,13 @@ export default {
 
 <style >
   html,body,#app{
-    height: 100vh;
+    height: 100%;
     width: 100%;
-    /* overflow: hidden; 或者 overflow: scroll; */
+    overflow-x: hidden;
+     /* 或者  */
     /* position: relative; */
     /* padding: 0px; */
+    position: relative;
   }
 
 </style>

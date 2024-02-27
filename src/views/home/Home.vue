@@ -35,10 +35,10 @@ export default {
   background-image: url(../../assets/h1.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  display: flex;
+  display: block;
   background: rgb(239, 246, 248);
   width: 100%;
-  height: 100%;
+  height: 100vh;
   position: relative;
   }
 
@@ -50,7 +50,7 @@ export default {
   }
   .contentView {
     /* display: flex; */
-    /* position: relative; */
+    /* position: fixed; */
     position: absolute;
     width: 100%;
     margin-top: 280px;

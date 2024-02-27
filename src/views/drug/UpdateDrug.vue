@@ -130,12 +130,14 @@ export default {
     async updateDrugs() {
       try {
         const updatedData = this.updateDrugForm
-        this.$store.dispatch('updateDrugs',updatedData)
-        this.$message({
-              message: "修改成功",
-              type: "success",
-              showClose: true,
-            });
+       const res = await this.$store.dispatch('updateDrugs',updatedData)
+       if (res == "ok") {
+          this.$message({
+            message: "修改成功",
+            type: "success",
+            showClose: true,
+          });
+        }
             // 跳转药品管理
             this.$router.push("/drugList");
       } catch (error) {}

@@ -38,7 +38,9 @@
         style="width: 100%; color: black"
       >
         <el-table-column type="selection" width="55"> </el-table-column>
-        <el-table-column prop="deptId" label="编号" width="100">
+        <el-table-column type="index" :index="indexMethod"  width="100" label="序列">
+        </el-table-column>
+        <el-table-column v-if="false"  prop="deptId"  class="needHiden" label="编号" width="100">
         </el-table-column>
         <el-table-column prop="deptName" label="名称" width="180">
         </el-table-column>
@@ -83,6 +85,7 @@ export default {
   name: "dept",
   data() {
     return {
+      isShowDeptId:false,
       page: 1,
       pageSize: 4,
       // 此deptName用于搜索框
@@ -104,6 +107,10 @@ export default {
     },
   },
   methods: {
+    // 自定义索引
+    indexMethod(index) {
+      return (this.page-1)*this.pageSize + (index + 1);
+    },
     // 去添加科室
     toAddDept() {
       this.$router.push("/addDept");
@@ -139,19 +146,27 @@ export default {
     },
 
     async handleDelete(index, row) {
+      console.log(row);
       try {
         const id = row.deptId;
-        await this.$store.dispatch("deleteDept", id);
-        if ((this.pageData.total - 1) % this.pageSize == 0) {
-          const params = {
-            page: (this.pageData.total - 1) / this.pageSize,
-            pageSize: this.pageSize,
-            // deptName用于检索框
-            deptName: this.deptName,
-          };
-          await this.$store.dispatch("showPageDepts", params);
-        }else{
-          this.getData();
+        const res = await this.$store.dispatch("deleteDept", id);
+        if (res == "ok") {
+          if ((this.pageData.total - 1) % this.pageSize == 0) {
+            const params = {
+              page: (this.pageData.total - 1) / this.pageSize,
+              pageSize: this.pageSize,
+              // deptName用于检索框
+              deptName: this.deptName,
+            };
+            await this.$store.dispatch("showPageDepts", params);
+          } else {
+            this.getData();
+          }
+          this.$message({
+            message: "删除成功",
+            type: "success",
+            showClose: true,
+          });
         }
       } catch (error) {
         alert(error.msg);
@@ -169,7 +184,14 @@ export default {
     deleteSomeDepts() {
       try {
         this.multipleSelection.forEach(async (item) => {
-          await this.$store.dispatch("deleteDept", item.deptId);
+          const res = await this.$store.dispatch("deleteDept", item.deptId);
+          if (res == "ok") {
+            this.$message({
+              message: "删除成功",
+              type: "success",
+              showClose: true,
+            });
+          }
           this.getData();
         });
       } catch (error) {
@@ -217,5 +239,10 @@ export default {
     margin-top: 15px;
     transform: translateX(-50%);
   }
+  .needHiden{
+    background-color: black;
+    color: aquamarine;
+  }
+
 }
 </style>

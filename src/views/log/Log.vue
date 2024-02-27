@@ -17,7 +17,11 @@
     </div>
     <div class="logTable">
       <el-table stripe border style="width: 100%; color: black" :data="records">
-        <el-table-column align="center" prop="logId" label="ID" width="70">
+       
+        <el-table-column type="index" :index="indexMethod"  width="60" align="center" label="序列">
+        </el-table-column>
+
+        <el-table-column v-if="false" align="center" prop="logId" label="ID" width="70">
         </el-table-column>
 
         <el-table-column
@@ -82,6 +86,11 @@ export default {
     },
   },
   methods: {
+ // 自定义索引
+ indexMethod(index) {
+      return (this.page-1)*this.pageSize + (index + 1);
+    },
+
     async handleCurrentChange(val) {
       try {
         const type = this.logType;
@@ -133,7 +142,7 @@ export default {
     position: absolute;
     /* display: flex; */
     top: 175px;
-    width: 781px;
+    width: 771px;
     left: 50%;
     transform: translate(-50%);
   }

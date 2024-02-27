@@ -41,7 +41,12 @@
               v-model="loginForm.code"
               placeholder="输入验证码"
             ></el-input>
-            <img width="80px" height="40px" :src="captchaUrl" />
+            <img
+              @click="changeCaptcha"
+              width="80px"
+              height="40px"
+              :src="captchaUrl"
+            />
           </div>
         </el-form-item>
 
@@ -54,16 +59,12 @@
           >
         </el-form-item>
       </el-form>
-      <a style="text-decoration: none; font-size: 14px" @click="toRegist"
-        >免费注册</a
-      >
     </div>
   </div>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
-import { loginApi } from "@/api";
 export default {
   name: "login",
   data() {
@@ -88,10 +89,10 @@ export default {
       },
     };
   },
-  // created() {
-  //   // // 当组件创建完成后调用
-  //   // this.changeCaptcha();
-  // },
+  created() {
+    // // 当组件创建完成后调用
+    this.changeCaptcha();
+  },
   methods: {
     // 引入MapMutations，存储userId
     ...mapMutations(["SETUSERDATA"]),
@@ -108,24 +109,35 @@ export default {
             const data = {
               userName: this.loginForm.userName,
               password: this.loginForm.password,
-              // code:this.loginForm.code
+              code:this.loginForm.code
             };
-           await this.$store.dispatch("userLogin", data);
+            const res = await this.$store.dispatch("userLogin", data);
+            if ((res == "ok")) {
+              this.$message({
+                message: "登录成功",
+                type: "success",
+                showClose: true,
+              });
+            }else{
+              this.$message({
+                message: res,
+                type: "error",
+                showClose: true,
+              });
+            }
             this.$router.push("/");
           } catch (error) {}
         }
       });
     },
 
-    // // 验证码()
-    // async changeCaptcha() {
-    //   let res = await getChangeCaptcha();
-    //   if (res.flag == true) {
-    //     // const reader = new FileReader();
-    //     // // const imageUrl = reader.result;
-    //     this.captchaUrl = "data:image/png;base64"+res.data;
-    //   }
-    // },
+    // 验证码()
+    async changeCaptcha() {
+      const res = await this.$store.dispatch("userCode");
+      // const reader = new FileReader();
+      // // const imageUrl = reader.result;
+      this.captchaUrl = "data:image/png;base64" + res;
+    },
 
     loginSuccess(userName) {
       // 登录成功后的逻辑

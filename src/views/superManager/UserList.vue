@@ -10,7 +10,11 @@
       >
       <el-table :data="tableData" style="width: 100%">
         <el-table-column :label="'用户（医生）信息   '" align="center">
-          <el-table-column prop="userId" label="ID" width="150" align="center">
+         
+          <el-table-column type="index" :index="indexMethod"  width="60" align="center" label="序列">
+        </el-table-column>
+
+          <el-table-column v-if="false" prop="userId" label="ID" width="150" align="center">
           </el-table-column>
 
           <el-table-column
@@ -120,6 +124,10 @@ export default {
   },
 
   methods: {
+     // 自定义索引
+     indexMethod(index) {
+      return (this.page - 1) * this.pageSize + (index + 1);
+    },
     // 将代表性别的数字转换程文字
     getGenderText(sex) {
       return sex === 0 ? "女" : "男";

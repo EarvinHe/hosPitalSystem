@@ -31,13 +31,12 @@ import AddNotice from '@/views/notice/AddNotice'
 import UpdateNotice from '@/views/notice/UpdateNotice'
 import FileList from '@/views/file/FileList'
 import AddFile from '@/views/file/AddFile'
-import test from '@/views/file/test'
-import test1 from '@/views/file/test1'
-import DownLoadPatient from '@/views/patient/DownLoadPatient'
 import Carousel from '@/views/home/carousel'
 import Users from '@/views/superManager/Users'
 import UserList from '@/views/superManager/UserList'
 import Auth from '@/views/superManager/Auth'
+import { showMessage } from "@/util/message";
+import { getToken } from "@/util/token";
 Vue.use(VueRouter);
 
 const routes = [
@@ -232,25 +231,6 @@ const routes = [
         // component: () => import ('../views/login/Login'),//懒加载
         component: AddFile
     },
-    {
-        path: '/test',//默认路径
-        name: 'test',
-        // component: () => import ('../views/login/Login'),//懒加载
-        component: test
-    },
-    {
-        path: '/test1',//默认路径
-        name: 'test1',
-        // component: () => import ('../views/login/Login'),//懒加载
-        component: test1
-    },
-
-    {
-        path: '/downLoadPatient',//默认路径
-        name: 'downLoadPatient',
-        // component: () => import ('../views/login/Login'),//懒加载
-        component: DownLoadPatient
-    },
 
     // 用户管理模块（超级管理员）
     {
@@ -313,7 +293,7 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
 
 //路由守卫
 router.beforeEach((to, from, next) => {
-    const token = store.state.user.userToken
+    const token = getToken()
     // 管理系统常见的两个金典逻辑：
     // 1.如果用户访问登录页面，但token已经存在，跳转到首页
     if (token) {
@@ -335,7 +315,8 @@ router.beforeEach((to, from, next) => {
             // 用户未登录或未注册，访问的是登录页或注册页，放行
             next();
         } else {
-            // 用户未登录，访问的是其他页面，重定向到登录页
+            // 用户未登录，访问的是其他页面，重定向到登录页,并弹出错误信息
+            // showMessage('请先登录再试')
             next("/login");
         }
         // next()

@@ -9,7 +9,10 @@
       >
       <el-table :data="tableData" style="width: 100%">
         <el-table-column :label="'职位/权限   '" align="center">
+          <el-table-column type="index"   width="100" align="center" label="序列">
+        </el-table-column>
           <el-table-column
+          v-if="false"
             prop="authId"
             label="职位id"
             width="150"
@@ -20,7 +23,7 @@
           <el-table-column
             prop="authName"
             label="职位名"
-            width="150"
+            width="180"
             align="center"
           >
           </el-table-column>
@@ -28,7 +31,7 @@
           <el-table-column
             prop="authDesc"
             label="职位描述"
-            width="150"
+            width="180"
             align="center"
           >
           </el-table-column>
@@ -80,6 +83,7 @@ export default {
   },
 
   methods: {
+    
     // 查询数据并显示
     async getAuth() {
       try {

@@ -2,8 +2,8 @@
 // 但登录功能直接写在了login组件当中，因为并没有用到仓库,
 // 最后又加上了loginApi因为发现要借用该请求存储userId到state
 import { setToken,getToken,removeToken,setUserName,gettUserName,removeUsername,setUserData,getUserData, removeUserData } from "@/util/token";
-import { loginApi, reqUserRegist, reqDeptWhenRegist,reqLogout,reqAllDoctors,
-reqAllDeptAndUser,reqDeleteUser,reqUserByUserId,reqUpdateByUserId} from "../api/index";
+import { loginApi,getChangeCaptcha, reqUserRegist, reqDeptWhenRegist,reqLogout,reqAllDoctors,
+reqAllDeptAndUser,reqDeleteUser,reqUserByUserId,reqUpdateByUserId,reqAddImg,reqLoadUserImg} from "../api/index";
 const state = {
     // 存储请求返回的数据到仓库，初始为空,
     // 是否为字符串或者对象还是数组得看请求的数据是什么样子的
@@ -77,6 +77,16 @@ const actions = {
         }
     },
 
+    // 登录验证码
+    async userCode({commit}){
+        let result = await getChangeCaptcha();
+        if(result.flag == true){
+            return result.data
+        }else{
+            return result.msg
+        }
+    },
+
     //用户注册(该方法是注册页面下的userRegist，即注册按钮触发)
     async userRegist({ commit }, data) {
         let result = await reqUserRegist(data);
@@ -86,6 +96,22 @@ const actions = {
             return Promise.reject(new Error('faile'))
         }
     },
+
+    // 用户头像上传
+    async userImg({commit},data){
+        let result = await reqAddImg(data);
+        if(result.flag == true){
+            return result.data
+         }else{
+             return result.msg
+         }
+    },
+
+    // 下载用户头像(用不着了,具体原因看api)
+/*     async loadUserImg({commit},name){
+        let result = await reqLoadUserImg(name);
+        console.log(result)
+    }, */
 
     // 在注册页面展示时查询所有科室
     async selectAllDepts({ commit }) {

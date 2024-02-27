@@ -30,7 +30,22 @@
         border
         style="width: 100%; color: black"
       >
-        <el-table-column prop="fileId" label="Id" width="100" align="center">
+        <el-table-column
+          type="index"
+          :index="indexMethod"
+          width="60"
+          align="center"
+          label="序列"
+        >
+        </el-table-column>
+
+        <el-table-column
+          v-if="false"
+          prop="fileId"
+          label="Id"
+          width="100"
+          align="center"
+        >
         </el-table-column>
         <el-table-column
           prop="fileName"
@@ -91,7 +106,7 @@
 </template>
   
   <script>
-import axios from 'axios';
+import axios from "axios";
 import { mapGetters } from "vuex";
 export default {
   name: "fileList",
@@ -114,6 +129,11 @@ export default {
     },
   },
   methods: {
+    // 自定义索引
+    indexMethod(index) {
+      return (this.page - 1) * this.pageSize + (index + 1);
+    },
+
     // 去添加科室
     toAddFile() {
       this.$router.push("/addFile");
@@ -148,34 +168,39 @@ export default {
     async handleDelete(index, row) {
       try {
         const id = row.fileId;
-        await this.$store.dispatch("deleteFile", id);
-        if ((this.fileData.total - 1) % this.pageSize == 0) {
-          const params = {
-            page: (this.fileData.total - 1) / this.pageSize,
-            pageSize: this.pageSize,
-            fileName: this.fileName
-          };
-          await this.$store.dispatch("QueryFile", params);
-        } else {
-          this.getData();
+        const res = await this.$store.dispatch("deleteFile", id);
+        if (res == "ok") {
+          if ((this.fileData.total - 1) % this.pageSize == 0) {
+            const params = {
+              page: (this.fileData.total - 1) / this.pageSize,
+              pageSize: this.pageSize,
+              fileName: this.fileName,
+            };
+            await this.$store.dispatch("QueryFile", params);
+          } else {
+            this.getData();
+          }
+          this.$message({
+            message: "修改成功",
+            type: "success",
+            showClose: true,
+          });
         }
-      } catch (error) {
-        alert(error.msg);
-      }
+      } catch (error) {}
     },
 
     // 下载共享文档
-    async toDownload(row){
-      const fileId = row.fileId
-      const thisImage =  await  this.$store.dispatch('downLoad',fileId)
+    async toDownload(row) {
+      const fileId = row.fileId;
+      const thisImage = await this.$store.dispatch("downLoad", fileId);
       // 以blob的形式打印出来
       // console.log(thisImage)
       // 创建一个临时下载url
-      const thisUlrl = URL.createObjectURL(thisImage)
+      const thisUlrl = URL.createObjectURL(thisImage);
       // console.log(thisUlrl)
 
       // 在页面上点击下载按钮创建一个临时的a链接，用于下载操作
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       // 下载的地址（从何处下载）
       link.download = row.filePath;
       // 下载的url即为创建的thisUrl
@@ -183,7 +208,7 @@ export default {
       // 打开新的页面
       // link.target = '_blank'
       // 将link元素隐藏
-      link.style.display = 'none'
+      link.style.display = "none";
       // 将这个link元素添加到页面body中
       document.body.appendChild(link);
       // 触发下载事件
@@ -193,7 +218,6 @@ export default {
       // 同样移除临时link
       document.body.removeChild(link);
     },
-
   },
 };
 </script>
@@ -205,7 +229,7 @@ export default {
   height: 100%;
   flex-direction: column;
   align-items: center;
-  position: fixed;
+  position: relative;
   .topOption {
     /* display: flex; */
     width: 660px;
@@ -219,7 +243,7 @@ export default {
     position: absolute;
     /* display: flex; */
     top: 175px;
-    width: 992px;
+    width: 952px;
     left: 50%;
     transform: translate(-50%);
   }

@@ -9,7 +9,8 @@ Vue.use(ElementUI); */
 import { Button,Form,Input,Checkbox,FormItem,Message,
          Menu,Submenu,MenuItemGroup,MenuItem,Select,
          Option,Col,DatePicker,RadioGroup,Radio,Table,TableColumn,
-         Pagination,RadioButton,Dialog,Card,Upload,Carousel,CarouselItem,Drawer,Divider } from 'element-ui';
+         Pagination,RadioButton,Dialog,Card,Upload,Carousel,CarouselItem,
+         Drawer,Divider,Avatar,Progress } from 'element-ui';
 Vue.use(Button);
 Vue.use(Input);
 Vue.use(Form);
@@ -36,6 +37,9 @@ Vue.use(Carousel)
 Vue.use(CarouselItem)
 Vue.use(Drawer)
 Vue.use(Divider)
+Vue.use(Divider)
+Vue.use(Avatar)
+Vue.use(Progress)
 Vue.prototype.$message = Message;
 
 export default Element

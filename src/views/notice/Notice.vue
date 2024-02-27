@@ -6,9 +6,9 @@
         <span style="float: right; padding: 3px 0" type="text">今日</span>
       </div>
       <el-table :data="tableData" stripe style="width: 100%">
-        <el-table-column  label="标题" align="center">
+        <el-table-column label="标题" align="center">
           <template slot-scope="scope">
-            <a href="D:/hospital/noticeHtml/im403.html" >百度</a>
+            <a href="D:/hospital/noticeHtml/im403.html">百度</a>
           </template>
         </el-table-column>
 
@@ -55,28 +55,32 @@ export default {
   methods: {
     // 分页查询数据
     async getData() {
-      const params = {
-        page: this.page,
-        pageSize: this.pageSize,
-      };
-      await this.$store.dispatch("showNotice", params);
-      this.tableData = this.records;
+      try {
+        const params = {
+          page: this.page,
+          pageSize: this.pageSize,
+        };
+        await this.$store.dispatch("showNotice", params);
+        this.tableData = this.records;
+      } catch (error) {}
     },
 
     // 翻页
     async handleCurrentChange(val) {
-      const params = {
-        page: val,
-        pageSize: this.pageSize,
-      };
-      await this.$store.dispatch("showNotice", params);
-      this.tableData = this.records;
+      try {
+        const params = {
+          page: val,
+          pageSize: this.pageSize,
+        };
+        await this.$store.dispatch("showNotice", params);
+        this.tableData = this.records;
+      } catch (error) {}
     },
 
     // 点击链接
-    clickthisTitle(path){
+    clickthisTitle(path) {
       // console.log(path)
-    }
+    },
   },
 };
 </script>

@@ -228,11 +228,8 @@ export default {
       _fileObj = uploadFile;
       let formData = new FormData();
       formData.append("uploadFile", _fileObj);
-      const result = await axios.post(
-        "http://localhost:8080/file/upload/image",
-        formData
-      );
-      this.registForm.image = result.data.data;
+      const result = await this.$store.dispatch('userImg',formData)
+      this.registForm.image = result;
     },
   },
 };

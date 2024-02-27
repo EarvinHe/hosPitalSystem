@@ -36,6 +36,9 @@ const actions = {
         let result = await reqAllDepts();
         if (result.flag == true) {
             commit('SHOWALLDEPTS', result.data)
+        }else{
+            // console.log(result.msg)
+            return result.msg
         }
         
     },
@@ -45,6 +48,9 @@ const actions = {
         let result =  await reqPageQuery(data);
         if (result.flag == true) {
             commit('SHOWPAGEDEPTS', result.data)
+        }else{
+            // console.log(result.msg)
+            return result.msg
         }
     },
 
@@ -53,6 +59,9 @@ const actions = {
         let result = await reqQueryById(deptId);
         if(result.flag == true){
             commit('SHOWDEPTBYID',result)
+        }else{
+            // console.log(result.msg)
+            return result.msg
         }
     },
 
@@ -71,6 +80,9 @@ const actions = {
         let result = await reqDeleteDept(deptId);
         if(result.flag == true){
             return 'ok'
+        }else{
+            // console.log(result.msg)
+            return result.msg
         }
     },
 
@@ -88,6 +100,7 @@ const actions = {
         if(result.flag == true){
             return 'ok'
         }else{
+            // console.log(result.msg)
             return result.msg
         }
     }

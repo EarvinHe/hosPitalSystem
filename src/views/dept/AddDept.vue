@@ -33,17 +33,17 @@ export default {
   methods: {
     async addDept() {
       try {
-        await this.$store.dispatch("addDept", this.addDeptForm);
-        this.$message({
-              message: "添加成功",
-              type: "success",
-              showClose: true,
-            });
-            // 跳转科室管理
-            this.$router.push("/dept");
-      } catch (error) {
-        alert(error.msg)
-      }
+      const res =  await this.$store.dispatch("addDept", this.addDeptForm);
+        if (res == "ok") {
+          this.$message({
+            message: "添加成功",
+            type: "success",
+            showClose: true,
+          });
+        }
+        // 跳转科室管理
+        this.$router.push("/dept");
+      } catch (error) {}
     },
   },
 };

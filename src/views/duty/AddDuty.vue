@@ -88,6 +88,7 @@ export default {
               type: "warning",
               showClose: true,
             })
+            this.$router.push({  name:"dutyManager", params: { deptId:this.deptId } });
         }
       } catch (error) {}
     },

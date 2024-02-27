@@ -18,7 +18,7 @@ const actions = {
     // 注册和职位模块时查询所有职位
     async queryAllAuth({commit}){
         let result = await reqAllAuth();
-        console.log(result)
+        // console.log(result)
         if(result.flag == true){
             commit('QUERYALLAUTH',result.data)
         }else{
